@@ -72,6 +72,9 @@
 
 #if defined(CTR_CROWD_CONTROL)
 #include "crowd/crowd_config.c"
+#include "crowd/crowd_json.c"
+#include "crowd/crowd_net.c"
+#include "crowd/crowd_protocol.c"
 #include "crowd/crowd.c"
 #endif
 

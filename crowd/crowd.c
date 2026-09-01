@@ -1,5 +1,7 @@
 #include <crowd/crowd.h>
 #include <crowd/crowd_config.h>
+#include <crowd/crowd_net.h>
+#include <crowd/crowd_protocol.h>
 
 #include <platform/native_log.h>
 
@@ -14,6 +16,8 @@ void Crowd_Init(void)
 		return;
 	}
 
+	CrowdNet_Init(config->host, config->port);
+
 	s_crowdRunning = 1;
 
 	Platform_Log("[CTR Crowd] enabled, target %s:%d\n", config->host, (int)config->port);
@@ -25,6 +29,8 @@ void Crowd_Shutdown(void)
 	{
 		return;
 	}
+
+	CrowdNet_Shutdown();
 
 	s_crowdRunning = 0;
 
@@ -45,7 +51,14 @@ void Crowd_Tick(struct GameTracker *gGT)
 		return;
 	}
 
-	// TODO(crowd): socket, dispatch requests and ages timed effects
+	CrowdNet_Pump();
+
+	char frame[1024];
+	u32 frameLength;
+	while ((frameLength = CrowdNet_PopFrame(frame, sizeof(frame))) > 0)
+	{
+		CrowdProtocol_HandleFrame(frame, frameLength);
+	}
 }
 
 void Crowd_ApplyInputMask(void)
