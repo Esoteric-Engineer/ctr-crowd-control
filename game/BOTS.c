@@ -1,5 +1,9 @@
 #include <common.h>
 
+#if defined(CTR_CROWD_CONTROL)
+#include <crowd/crowd.h>
+#endif
+
 enum
 {
 	BOTS_ADV_MAX_LOSS_DIFFICULTY_INDEX = 10,
@@ -1563,6 +1567,9 @@ UpdateTireColorTimer:
 		}
 
 		deltaPosThisFrame = CTR_MipsSra(CTR_MipsMulLo(botDriver->botData.aiPhysics.speedLinear, elapsedMilliseconds), 5); // iVar4
+#if defined(CTR_CROWD_CONTROL)
+		deltaPosThisFrame = Crowd_ScaleBotDelta(deltaPosThisFrame);
+#endif
 		if (deltaPosThisFrame < 0)
 		{
 			deltaPosThisFrame = 0;

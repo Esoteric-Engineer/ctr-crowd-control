@@ -1,5 +1,6 @@
 #include <crowd/crowd.h>
 #include <crowd/crowd_config.h>
+#include <crowd/crowd_fx_bots.h>
 #include <crowd/crowd_fx_input.h>
 #include <crowd/crowd_fx_terrain.h>
 #include <crowd/crowd_net.h>
@@ -91,6 +92,5 @@ int Crowd_ScaleBotDelta(int delta)
 		return delta;
 	}
 
-	// TODO(crowd): scale AI nav progress here
-	return delta;
+	return CrowdFxBots_ScaleDelta(delta);
 }

@@ -62,3 +62,9 @@ CROWD_EFFECT("input_disable_jumping", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CA
 /* Terrain remaps (both 30s, mutually exclusive). See crowd/crowd_fx_terrain.c. */
 CROWD_EFFECT("terrain_no_rough", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_TERRAIN, TerrainNoRough)
 CROWD_EFFECT("terrain_all_dirt", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_TERRAIN, TerrainAllDirt)
+
+/* Enemy racer speed. Bots running under BOT_FLAG_FREE_PHYSICS are unaffected. See crowd/crowd_fx_bots.c. */
+CROWD_EFFECT("bots_speed_down_50", CROWD_EFFECT_TIMED, 20000, CROWD_EFFECT_CATEGORY_BOTS, BotsSpeedDown50)
+CROWD_EFFECT("bots_speed_up_50", CROWD_EFFECT_TIMED, 20000, CROWD_EFFECT_CATEGORY_BOTS, BotsSpeedUp50)
+CROWD_EFFECT("bots_speed_down_100", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_BOTS, BotsSpeedDown100)
+CROWD_EFFECT("bots_speed_up_100", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_BOTS, BotsSpeedUp100)
