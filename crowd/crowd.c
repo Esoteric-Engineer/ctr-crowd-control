@@ -1,6 +1,7 @@
 #include <crowd/crowd.h>
 #include <crowd/crowd_config.h>
 #include <crowd/crowd_fx_input.h>
+#include <crowd/crowd_fx_terrain.h>
 #include <crowd/crowd_net.h>
 #include <crowd/crowd_protocol.h>
 #include <crowd/crowd_runtime.h>
@@ -80,8 +81,7 @@ u8 Crowd_MapTerrain(u8 terrainType)
 		return terrainType;
 	}
 
-	// TODO(crowd): remap terrain here
-	return terrainType;
+	return CrowdFxTerrain_MapTerrain(terrainType);
 }
 
 int Crowd_ScaleBotDelta(int delta)

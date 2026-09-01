@@ -1,5 +1,9 @@
 #include <common.h>
 
+#if defined(CTR_CROWD_CONTROL)
+#include <crowd/crowd.h>
+#endif
+
 enum
 {
 	VEH_AFTER_COLL_SCRUB_COUNT = len(data.MetaDataScrub),
@@ -23,6 +27,10 @@ struct Scrub *VehAfterColl_GetSurface(u32 scrubId)
 struct Terrain *VehAfterColl_GetTerrain(u8 terrainType)
 {
 	struct Terrain *ter = &data.MetaDataTerrain[0];
+
+#if defined(CTR_CROWD_CONTROL)
+	terrainType = Crowd_MapTerrain(terrainType);
+#endif
 
 	// if terrain is valid, max 20
 	if (terrainType < VEH_AFTER_COLL_TERRAIN_COUNT)

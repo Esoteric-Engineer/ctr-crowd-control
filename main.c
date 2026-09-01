@@ -79,6 +79,7 @@
 #include "crowd/crowd_fx_items.c"
 #include "crowd/crowd_fx_cheats.c"
 #include "crowd/crowd_fx_input.c"
+#include "crowd/crowd_fx_terrain.c"
 #include "crowd/crowd.c"
 #endif
 
