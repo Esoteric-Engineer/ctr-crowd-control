@@ -4,6 +4,16 @@
 Usage:
     python3 tools/crowdcontrol/fake_cc_server.py
     ctr_native --crowd-control
+
+Commands:
+    test <code>                     EffectTest
+    start <code> [duration] [qty]   EffectStart
+    stop <code>                     EffectStop
+    data                            DataRequest
+    gameupdate                      GameUpdate
+    keepalive                       KeepAlive (no response expected)
+    raw <json>                      send a JSON object verbatim
+    quit
 """
 
 from __future__ import annotations
