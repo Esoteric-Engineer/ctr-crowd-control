@@ -4,6 +4,8 @@ include(CheckCCompilerFlag)
 
 set(CTR_NATIVE_VERSION "0.1.0-beta.7.1")
 
+option(CTR_CROWD_CONTROL "Build the Crowd Control integration" ON)
+
 if(NOT CMAKE_SIZEOF_VOID_P EQUAL 4)
     message(FATAL_ERROR
         "CTR Native currently requires a 32-bit target. "
@@ -97,6 +99,9 @@ target_compile_definitions(ctr_native PRIVATE
     CTR_NATIVE_VERSION=\"${CTR_NATIVE_VERSION}\"
     CTR_NATIVE_BUILD_ID=\"${CTR_NATIVE_BUILD_ID}\"
 )
+if(CTR_CROWD_CONTROL)
+    target_compile_definitions(ctr_native PRIVATE CTR_CROWD_CONTROL)
+endif()
 if(CTR_NATIVE_MSVC_FRONTEND)
     target_compile_options(ctr_native PRIVATE
         /W4 #TODO(aalhendi): fix warnings
@@ -128,6 +133,10 @@ else()
     endif()
 endif()
 target_link_libraries(ctr_native SDL3::SDL3)
+if(CTR_CROWD_CONTROL AND WIN32)
+    # Crowd Control speaks raw TCP; Winsock is not linked by default.
+    target_link_libraries(ctr_native ws2_32)
+endif()
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
     target_link_options(ctr_native PRIVATE -static-libgcc)
 endif()

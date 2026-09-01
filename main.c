@@ -25,6 +25,11 @@
 #include "platform/native_replay_scheduler.h"
 #include "platform/native_savestate.h"
 
+#if defined(CTR_CROWD_CONTROL)
+#include "crowd/crowd.h"
+#include "crowd/crowd_config.h"
+#endif
+
 #include <platform.h>
 
 #include "game/game_unity.h"
@@ -64,6 +69,11 @@
 #include "platform/native_savestate.c"
 #include "platform/native_state.c"
 #include "platform/native_str.c"
+
+#if defined(CTR_CROWD_CONTROL)
+#include "crowd/crowd_config.c"
+#include "crowd/crowd.c"
+#endif
 
 #ifndef CC
 #if defined(__GNUC__)
@@ -176,6 +186,13 @@ int main(int argc, char *argv[])
 		return NativeConsole_Return(1);
 	}
 
+#if defined(CTR_CROWD_CONTROL)
+	if (Crowd_ConfigureFromArgs(argc, argv) != 0)
+	{
+		return NativeConsole_Return(1);
+	}
+#endif
+
 #if defined(CTR_INTERNAL)
 	if (NativeReplayScheduler_PrepareReportFromArgs(argc, argv) != 0)
 	{
@@ -215,7 +232,15 @@ int main(int argc, char *argv[])
 	(void)argv;
 #endif
 
+#if defined(CTR_CROWD_CONTROL)
+	Crowd_Init();
+#endif
+
 	const int result = CTR_Main();
+
+#if defined(CTR_CROWD_CONTROL)
+	Crowd_Shutdown();
+#endif
 
 	Platform_Shutdown();
 	return NativeConsole_Return(result);
