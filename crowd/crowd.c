@@ -1,5 +1,6 @@
 #include <crowd/crowd.h>
 #include <crowd/crowd_config.h>
+#include <crowd/crowd_fx_input.h>
 #include <crowd/crowd_net.h>
 #include <crowd/crowd_protocol.h>
 #include <crowd/crowd_runtime.h>
@@ -69,7 +70,7 @@ void Crowd_ApplyInputMask(void)
 		return;
 	}
 
-	// TODO(crowd): mask player 0's gamepad buffer here
+	CrowdFxInput_ApplyMask();
 }
 
 u8 Crowd_MapTerrain(u8 terrainType)

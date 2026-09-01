@@ -57,4 +57,8 @@ void CrowdRuntime_Tick(struct GameTracker *gGT);
 
 void CrowdRuntime_ForceExpireAll(void);
 
+/* True when in a race and ready for effects to be applied.
+Exposed so the gamepad mask can gate itself the same way effect starts already do. */
+b32 CrowdRuntime_IsReady(void);
+
 #endif

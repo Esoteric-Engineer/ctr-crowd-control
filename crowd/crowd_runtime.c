@@ -90,7 +90,7 @@ internal struct CrowdActiveEffect *CrowdRuntime_AllocSlot(void)
 }
 
 /* Ensures effects only land mid-race by ruling out loading/menus/cutscenes/pause/etc. */
-internal b32 CrowdRuntime_IsReady(void)
+b32 CrowdRuntime_IsReady(void)
 {
 	if (sdata->mainGameState != 3)
 	{

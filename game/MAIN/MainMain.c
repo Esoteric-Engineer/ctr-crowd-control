@@ -341,6 +341,7 @@ u32 main(void)
 
 #if defined(CTR_CROWD_CONTROL)
 			Crowd_Tick(gGT);
+			Crowd_ApplyInputMask();
 #endif
 
 			// Start new frame (ClearOTagR)

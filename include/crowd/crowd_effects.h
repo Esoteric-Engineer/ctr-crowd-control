@@ -53,3 +53,8 @@ CROWD_EFFECT("cheat_infinite_invisibility", CROWD_EFFECT_TIMED, 30000, CROWD_EFF
 CROWD_EFFECT("cheat_infinite_bombs", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatInfiniteBombs)
 CROWD_EFFECT("cheat_icy_tracks", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatIcyTracks)
 CROWD_EFFECT("cheat_super_turbo_pads", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatSuperTurboPads)
+
+/* Input denial (all 10s). Masks player 0's GamepadBuffer. See crowd/crowd_fx_input.c. */
+CROWD_EFFECT("input_disable_engine", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableEngine)
+CROWD_EFFECT("input_disable_steering", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableSteering)
+CROWD_EFFECT("input_disable_jumping", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableJumping)
