@@ -77,6 +77,7 @@
 #include "crowd/crowd_protocol.c"
 #include "crowd/crowd_runtime.c"
 #include "crowd/crowd_fx_items.c"
+#include "crowd/crowd_fx_cheats.c"
 #include "crowd/crowd.c"
 #endif
 
