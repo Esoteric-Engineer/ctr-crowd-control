@@ -2,6 +2,7 @@
 #include <crowd/crowd_config.h>
 #include <crowd/crowd_net.h>
 #include <crowd/crowd_protocol.h>
+#include <crowd/crowd_runtime.h>
 
 #include <platform/native_log.h>
 
@@ -44,8 +45,6 @@ int Crowd_IsEnabled(void)
 
 void Crowd_Tick(struct GameTracker *gGT)
 {
-	(void)gGT;
-
 	if (!s_crowdRunning)
 	{
 		return;
@@ -59,6 +58,8 @@ void Crowd_Tick(struct GameTracker *gGT)
 	{
 		CrowdProtocol_HandleFrame(frame, frameLength);
 	}
+
+	CrowdRuntime_Tick(gGT);
 }
 
 void Crowd_ApplyInputMask(void)

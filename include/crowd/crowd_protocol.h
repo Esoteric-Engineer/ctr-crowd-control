@@ -3,6 +3,8 @@
 
 #include <macros.h>
 
+struct CrowdJsonSlice;
+
 /* SimpleTCP request/response enums. */
 
 enum CrowdRequestType
@@ -38,5 +40,10 @@ enum CrowdEffectStatus
 
 /* Decodes one NUL-delimited frame's JSON body, dispatches it, and queues a response via CrowdNet_SendFrame. */
 void CrowdProtocol_HandleFrame(const char *json, u32 length);
+
+/* Encodes and sends one EffectStatus response.
+- idRaw may be NULL to omit the "id" field. 
+- Pass hasTimeRemaining=0 to omit the "timeRemaining" field. */
+void CrowdProtocol_SendEffectStatus(const struct CrowdJsonSlice *idRaw, enum CrowdEffectStatus status, s32 timeRemainingMs, s32 hasTimeRemaining);
 
 #endif

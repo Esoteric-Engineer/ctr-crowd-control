@@ -6,6 +6,10 @@
 #include <platform/native_savestate.h>
 #endif
 
+#if defined(CTR_CROWD_CONTROL)
+#include <crowd/crowd.h>
+#endif
+
 #if defined(CTR_NATIVE) && defined(CTR_INTERNAL)
 static struct NativePerfFrameInfo MainPerf_FrameInfo(struct GameTracker *gGT)
 {
@@ -334,6 +338,10 @@ u32 main(void)
 			}
 #endif
 			GAMEPAD_ProcessAnyoneVars(gGS);
+
+#if defined(CTR_CROWD_CONTROL)
+			Crowd_Tick(gGT);
+#endif
 
 			// Start new frame (ClearOTagR)
 			MainFrame_ResetDB(gGT);

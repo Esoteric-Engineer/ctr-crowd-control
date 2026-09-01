@@ -2,21 +2,26 @@
 
 #include <crowd/crowd_json.h>
 #include <crowd/crowd_net.h>
+#include <crowd/crowd_runtime.h>
 
 #include <platform/native_log.h>
 
-internal void CrowdProtocol_SendStatus(const struct CrowdJsonValue *idValue, enum CrowdEffectStatus status)
+void CrowdProtocol_SendEffectStatus(const struct CrowdJsonSlice *idRaw, enum CrowdEffectStatus status, s32 timeRemainingMs, s32 hasTimeRemaining)
 {
 	char scratch[256];
 	struct CrowdJsonWriter writer;
 
 	CrowdJsonWriter_Begin(&writer, scratch, sizeof(scratch));
-	if (idValue != NULL)
+	if (idRaw != NULL)
 	{
-		CrowdJsonWriter_RawField(&writer, "id", &idValue->raw);
+		CrowdJsonWriter_RawField(&writer, "id", idRaw);
 	}
 	CrowdJsonWriter_IntField(&writer, "type", CROWD_RESPONSE_EFFECT_STATUS);
 	CrowdJsonWriter_IntField(&writer, "status", (s32)status);
+	if (hasTimeRemaining)
+	{
+		CrowdJsonWriter_IntField(&writer, "timeRemaining", timeRemainingMs);
+	}
 
 	const u32 total = CrowdJsonWriter_End(&writer);
 	if (total == 0)
@@ -90,18 +95,8 @@ void CrowdProtocol_HandleFrame(const char *json, u32 length)
 	case CROWD_REQUEST_EFFECT_TEST:
 	case CROWD_REQUEST_EFFECT_START:
 	case CROWD_REQUEST_EFFECT_STOP:
-	{
-		const struct CrowdJsonValue *codeValue = CrowdJson_Get(&object, "code");
-
-		if ((codeValue == NULL) || (codeValue->type != CROWD_JSON_STRING))
-		{
-			CrowdProtocol_SendStatus(idValue, CROWD_STATUS_FAILURE);
-			break;
-		}
-
-		CrowdProtocol_SendStatus(idValue, CROWD_STATUS_UNAVAILABLE);
+		CrowdRuntime_HandleEffectRequest((enum CrowdRequestType)requestType, &object, idValue);
 		break;
-	}
 
 	case CROWD_REQUEST_DATA:
 	case CROWD_REQUEST_GAME_UPDATE:
