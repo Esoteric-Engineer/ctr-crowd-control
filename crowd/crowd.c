@@ -1,6 +1,7 @@
 #include <crowd/crowd.h>
 #include <crowd/crowd_config.h>
 #include <crowd/crowd_fx_bots.h>
+#include <crowd/crowd_fx_character.h>
 #include <crowd/crowd_fx_input.h>
 #include <crowd/crowd_fx_terrain.h>
 #include <crowd/crowd_net.h>
@@ -63,6 +64,7 @@ void Crowd_Tick(struct GameTracker *gGT)
 	}
 
 	CrowdRuntime_Tick(gGT);
+	CrowdFxCharacter_Tick();
 }
 
 void Crowd_ApplyInputMask(void)

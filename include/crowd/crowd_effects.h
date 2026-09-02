@@ -68,3 +68,22 @@ CROWD_EFFECT("bots_speed_down_50", CROWD_EFFECT_TIMED, 20000, CROWD_EFFECT_CATEG
 CROWD_EFFECT("bots_speed_up_50", CROWD_EFFECT_TIMED, 20000, CROWD_EFFECT_CATEGORY_BOTS, BotsSpeedUp50)
 CROWD_EFFECT("bots_speed_down_100", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_BOTS, BotsSpeedDown100)
 CROWD_EFFECT("bots_speed_up_100", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_BOTS, BotsSpeedUp100)
+
+/* Swap character (instant). Refused when the target's model pack was never streamed for this race.
+Note that Oxide isn't currently available. See crowd/crowd_fx_character.c. */
+CROWD_EFFECT("character_swap_random", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapRandom)
+CROWD_EFFECT("character_swap_crash", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapCrash)
+CROWD_EFFECT("character_swap_cortex", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapCortex)
+CROWD_EFFECT("character_swap_tiny", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapTiny)
+CROWD_EFFECT("character_swap_coco", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapCoco)
+CROWD_EFFECT("character_swap_ngin", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapNgin)
+CROWD_EFFECT("character_swap_dingodile", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapDingodile)
+CROWD_EFFECT("character_swap_polar", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapPolar)
+CROWD_EFFECT("character_swap_pura", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapPura)
+CROWD_EFFECT("character_swap_pinstripe", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapPinstripe)
+CROWD_EFFECT("character_swap_papu", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapPapu)
+CROWD_EFFECT("character_swap_ripper_roo", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapRipperRoo)
+CROWD_EFFECT("character_swap_komodo", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapKomodo)
+CROWD_EFFECT("character_swap_tropy", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapTropy)
+CROWD_EFFECT("character_swap_penta", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapPenta)
+CROWD_EFFECT("character_swap_fake_crash", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_CHARACTER, CharacterSwapFakeCrash)

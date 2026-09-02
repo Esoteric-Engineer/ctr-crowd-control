@@ -81,6 +81,7 @@
 #include "crowd/crowd_fx_input.c"
 #include "crowd/crowd_fx_terrain.c"
 #include "crowd/crowd_fx_bots.c"
+#include "crowd/crowd_fx_character.c"
 #include "crowd/crowd.c"
 #endif
 
