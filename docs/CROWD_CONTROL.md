@@ -70,6 +70,11 @@ Masks/rewrites bits directly in player 0's gamepad buffer every frame the effect
 
 - `input_reverse_steering` is applied after the disable-turn-left/right checks, so those always block the player's raw physical steering direction, not whichever direction currently steers left/right once reversed.
 
+### Player speed, `crowd/crowd_fx_player_speed.c`
+
+- Effects act directly on `driver->speed` in `VehPhysForce_OnApplyForces`, right before it's converted to the velocity vector.
+- `player_speed_disable` forces speed to exactly zero every frame while active, vs `player_speed_max_down_50` is a ceiling of the max speed a kart can hit.
+
 ### Terrain, mutually exclusive, `crowd/crowd_fx_terrain.c`
 
 - Remaps how the track surface handles for the duration of the effect. Only one can run at a time.

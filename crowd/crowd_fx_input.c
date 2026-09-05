@@ -12,34 +12,12 @@ enum
 	CROWD_INPUT_STICK_MAX = 0xFF,
 };
 
-global_variable b32 s_engineDisabled = 0;
 global_variable b32 s_jumpingDisabled = 0;
 global_variable b32 s_reverseCameraActive = 0;
 global_variable b32 s_constantJumpActive = 0;
 global_variable b32 s_turnLeftDisabled = 0;
 global_variable b32 s_turnRightDisabled = 0;
 global_variable b32 s_reverseSteeringActive = 0;
-
-enum CrowdEffectStatus Crowd_Fx_InputDisableEngine_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
-{
-	(void)effect;
-	(void)request;
-
-	if (s_engineDisabled)
-	{
-		return CROWD_STATUS_RETRY;
-	}
-
-	s_engineDisabled = 1;
-	return CROWD_STATUS_SUCCESS;
-}
-
-void Crowd_Fx_InputDisableEngine_Stop(struct CrowdActiveEffect *effect)
-{
-	(void)effect;
-
-	s_engineDisabled = 0;
-}
 
 enum CrowdEffectStatus Crowd_Fx_InputReverseCamera_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
@@ -144,7 +122,7 @@ void Crowd_Fx_InputDisableJumping_Stop(struct CrowdActiveEffect *effect)
 
 void CrowdFxInput_ApplyMask(void)
 {
-	if (!s_engineDisabled && !s_jumpingDisabled && !s_reverseCameraActive && !s_constantJumpActive &&
+	if (!s_jumpingDisabled && !s_reverseCameraActive && !s_constantJumpActive &&
 	    !s_turnLeftDisabled && !s_turnRightDisabled && !s_reverseSteeringActive)
 	{
 		return;
@@ -157,12 +135,6 @@ void CrowdFxInput_ApplyMask(void)
 	}
 
 	struct GamepadBuffer *pad = &sdata->gGamepads->gamepad[0];
-
-	if (s_engineDisabled)
-	{
-		pad->buttonsHeldCurrFrame &= ~BTN_CROSS;
-		pad->buttonsTapped &= ~BTN_CROSS;
-	}
 
 	if (s_constantJumpActive)
 	{

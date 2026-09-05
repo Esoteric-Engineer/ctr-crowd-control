@@ -1,5 +1,8 @@
 #include <common.h>
 
+#if defined(CTR_CROWD_CONTROL)
+#include <crowd/crowd.h>
+#endif
 
 void VehPhysForce_ConvertSpeedToVecOut(struct Driver *driver, Vec3 *vel)
 {
@@ -533,6 +536,14 @@ void VehPhysForce_OnApplyForces(struct Thread *thread, struct Driver *driver)
 	const int maxMudSinkYLevel = FP(-1);
 	const int maxSpeed = FP8(100);
 	driver->speed = min(driver->speed, maxSpeed);
+
+#if defined(CTR_CROWD_CONTROL)
+	/* This function also runs for bots, so it must only scale player 0. */
+	if (driver->driverID == 0)
+	{
+		driver->speed = (s16)Crowd_ScalePlayerSpeed(driver->speed, maxSpeed);
+	}
+#endif
 
 	/* origin of driver model is center-bottom of kart,
 	use orientation matrix, and half-radius {0, 25, 0},

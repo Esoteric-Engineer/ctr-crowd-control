@@ -67,13 +67,14 @@ public class CrashTeamRacingNative : SimpleTCPPack<SimpleTCPServerConnector>
         new("Super Turbo Pads", "cheat_super_turbo_pads") { Category = "Cheats", Duration = 30, Price = 40, Description = "Every turbo pad gives the maximum speed boost for 30 seconds." },
 
         // Input
-        new("Disable Engine", "input_disable_engine") { Category = "Controller", Duration = 10, Price = 20, Description = "The player can't accelerate for 10 seconds." },
         new("Disable Jumping", "input_disable_jumping") { Category = "Controller", Duration = 10, Price = 20, Description = "The player can't hop or power-slide for 10 seconds." },
         new("Disable Turning Left", "input_disable_turn_left") { Category = "Controller", Duration = 10, Price = 20, Description = "The player can't steer left for 10 seconds." },
         new("Disable Turning Right", "input_disable_turn_right") { Category = "Controller", Duration = 10, Price = 20, Description = "The player can't steer right for 10 seconds." },
         new("Reverse Steering", "input_reverse_steering") { Category = "Controller", Duration = 15, Price = 25, Description = "The player's left/right steering inputs are swapped for 15 seconds." },
         new("Reverse Camera", "input_reverse_camera") { Category = "Controller", Duration = 20, Price = 25, Description = "The player's camera stays reversed, as if holding the look-back button, for 20 seconds." },
         new("Constant Jump", "input_constant_jump") { Category = "Controller", Duration = 10, Price = 20, Description = "The player jumps continuously for 10 seconds." },
+        new("Cut the Engine", "player_speed_disable") { Category = "Player Speed", Duration = 10, Price = 25, Description = "The player's speed is immediately forced to zero for 10 seconds." },
+        new("Cap Player Speed 50%", "player_speed_max_down_50") { Category = "Player Speed", Duration = 10, Price = 20, Description = "The player's top speed is capped at 50% for 10 seconds. They can still freely accelerate/brake up to that cap." },
 
         // Terrain: all mutually exclusive with each other
         new("No Rough Terrain", "terrain_no_rough") { Category = "Terrain", Duration = 30, Price = 25, Description = "Dirt, grass, and mud all handle like asphalt for 30 seconds." },

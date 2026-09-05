@@ -3,6 +3,7 @@
 #include <crowd/crowd_fx_bots.h>
 #include <crowd/crowd_fx_character.h>
 #include <crowd/crowd_fx_input.h>
+#include <crowd/crowd_fx_player_speed.h>
 #include <crowd/crowd_fx_terrain.h>
 #include <crowd/crowd_net.h>
 #include <crowd/crowd_protocol.h>
@@ -95,4 +96,14 @@ int Crowd_ScaleBotDelta(int delta)
 	}
 
 	return CrowdFxBots_ScaleDelta(delta);
+}
+
+int Crowd_ScalePlayerSpeed(int speed, int maxSpeed)
+{
+	if (!s_crowdRunning)
+	{
+		return speed;
+	}
+
+	return CrowdFxPlayerSpeed_ScaleSpeed(speed, maxSpeed);
 }

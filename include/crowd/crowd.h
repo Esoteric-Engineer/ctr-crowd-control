@@ -35,4 +35,7 @@ u8 Crowd_MapTerrain(u8 terrainType);
 /* Scales one frame of AI nav-path progress. Returns delta unchanged if no effect is active. */
 int Crowd_ScaleBotDelta(int delta);
 
+/* Adjusts player 0's speed. Returns speed unchanged if no effect is active. */
+int Crowd_ScalePlayerSpeed(int speed, int maxSpeed);
+
 #endif
