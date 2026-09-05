@@ -54,10 +54,14 @@ CROWD_EFFECT("cheat_infinite_bombs", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CAT
 CROWD_EFFECT("cheat_icy_tracks", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatIcyTracks)
 CROWD_EFFECT("cheat_super_turbo_pads", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatSuperTurboPads)
 
-/* Input denial (all 10s). Masks player 0's GamepadBuffer. See crowd/crowd_fx_input.c. */
+/* Controller effects. Masks/rewrites player 0's GamepadBuffer every frame. See crowd/crowd_fx_input.c. */
 CROWD_EFFECT("input_disable_engine", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableEngine)
-CROWD_EFFECT("input_disable_steering", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableSteering)
 CROWD_EFFECT("input_disable_jumping", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableJumping)
+CROWD_EFFECT("input_disable_turn_left", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableTurnLeft)
+CROWD_EFFECT("input_disable_turn_right", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableTurnRight)
+CROWD_EFFECT("input_reverse_steering", CROWD_EFFECT_TIMED, 15000, CROWD_EFFECT_CATEGORY_INPUT, InputReverseSteering)
+CROWD_EFFECT("input_reverse_camera", CROWD_EFFECT_TIMED, 20000, CROWD_EFFECT_CATEGORY_INPUT, InputReverseCamera)
+CROWD_EFFECT("input_constant_jump", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputConstantJump)
 
 /* Terrain remaps (both 30s, mutually exclusive). See crowd/crowd_fx_terrain.c. */
 CROWD_EFFECT("terrain_no_rough", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_TERRAIN, TerrainNoRough)

@@ -64,9 +64,11 @@ Requests that don't arrive at a valid time answer `Retry` (Crowd Control's stand
 - Expiry clears the bit and undoes the grant.
 - The infinite-item cheats share the held-item slot with the race-item effects above, so redeeming one while one of those is already running answers `Retry`.
 
-### Input denial, `crowd/crowd_fx_input.c`
+### Controller effects, `crowd/crowd_fx_input.c`
 
-Masks bits directly in player 0's gamepad buffer every frame the effect is active, so there's nothing to clean up on expiration (or in case of a crash).
+Masks/rewrites bits directly in player 0's gamepad buffer every frame the effect is active, so there's nothing to clean up on expiration (or in case of a crash).
+
+- `input_reverse_steering` is applied after the disable-turn-left/right checks, so those always block the player's raw physical steering direction, not whichever direction currently steers left/right once reversed.
 
 ### Terrain, mutually exclusive, `crowd/crowd_fx_terrain.c`
 
