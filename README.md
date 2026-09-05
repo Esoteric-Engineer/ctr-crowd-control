@@ -1,6 +1,37 @@
-# CTR Native
+# CTR Crowd Control
 
-A native PC port of Crash Team Racing (PS1, 1999), built on top of the [CTR-ModSDK](https://github.com/CTR-tools/CTR-ModSDK) decompilation project.
+Play **Crash Team Racing (PS1, 1999)** with [Crowd Control](https://crowdcontrol.live/).
+
+This uses the native PC port of CTR, [ctr-native](https://github.com/CTR-tools/ctr-native), with a Crowd Control client integrated into the engine itself. A TCP connection is opened between the executable and the Crowd Control desktop app to send effects.
+
+A huge thanks to [CDRomatron](https://github.com/CDRomatron) (the original creator of CTR Crowd Control) and [Faradise](https://github.com/FRDS) (who took over the project from CDRomatron) for being so helpful and willing to answer questions! Links to their CTR Crowd Control projects are in the Credits below.
+
+- For steps to play, see the Quick Start guide below.
+- For technical info / further development, see [docs/CROWD_CONTROL.md](docs/CROWD_CONTROL.md).
+
+## Quick Start: Playing with Crowd Control
+
+Read this if you've downloaded a release build and want to get up and running.
+
+1. **Set up the game:** Unzip the release. Create a folder named `assets` next to the executable, then in that folder, add your **NTSC-U** copy of Crash Team Racing named `ctr-u.bin`:
+   ```
+   CTR-Crowd-Control/
+     ctr_native.exe
+     assets/
+       ctr-u.bin
+   ```
+
+2. **Load the pack:** Install the [Crowd Control desktop app](https://crowdcontrol.live/) and the [Crowd Control SDK](https://github.com/WarpWorld/CrowdControl.SDK/releases), then point the SDK at `pack/CrashTeamRacingNativePack.cs` (included in the release) and load it as a local pack.
+
+3. **Launch:** With the desktop app running and the pack loaded, run:
+   ```
+   ctr_native.exe --crowd-control
+   ```
+   The game connects to the app automatically. **That's it!**
+
+*If running Crowd Control on a non-standard host or port, see [docs/CROWD_CONTROL.md](docs/CROWD_CONTROL.md) for notes on `--crowd-host` and `--crowd-port` flags.*
+
+Majority of the README below this point is the original `ctr-native` README with a few notes added about CrowdControl structure, and updated Credits.
 
 ## Philosophy
 
@@ -9,13 +40,18 @@ A native PC port of Crash Team Racing (PS1, 1999), built on top of the [CTR-ModS
 - **Clean platform layer.** `main.c` owns process startup; host details stay in `platform/native_*`.
 - **No build system nonsense.** Just `build.bat` / `build.sh`.
 - **Fully static build.** Single executable, zero dependencies. SDL3 is compiled from vendored source and linked statically.
+- **Crowd Control as ordinary game code.** As much as possible, effects are typed with named structs and enums that the decomp provides, never hardcoded PS1 RAM addresses.
 
 ## Directory Layout
 
 ```
-ctr_native/
+ctr-crowd-control/
   main.c              Entrypoint and native platform boundary
   platform/           Native-owned audio, input, memcard, CD, and PSX facade glue
+  crowd/              Crowd Control transport, effect runtime, and effect handlers
+  include/crowd/      Crowd Control public headers, including the effect table (crowd_effects.h)
+  pack/               Crowd Control desktop app effect pack (C#)
+  tools/crowdcontrol/   Dev harness and pack/header sync checker
   build-msvc.bat      Windows build (MSVC x86)
   build.bat           Windows build (MinGW i686)
   build.sh            Linux build
@@ -28,7 +64,7 @@ ctr_native/
     SDL/              SDL3 source (static build)
 ```
 
-## Prerequisites
+## Building from source
 
 ### Windows
 
@@ -60,7 +96,7 @@ sudo apt install gcc-multilib
 sudo apt install libx11-dev libxext-dev libgl1-mesa-dev libasound2-dev libudev-dev libdbus-1-dev
 ```
 
-## Building
+### Build commands
 
 ```
 build-msvc.bat       # Windows, MSVC x86 (recommended)
@@ -77,6 +113,9 @@ cmake --build --preset windows-msvc-x86-debug
 ctest --preset windows-msvc-x86-debug
 ```
 
+`ctest` runs `tools/crowdcontrol/gen_pack.py --check`, which fails the build if [`pack/CrashTeamRacingNativePack.cs`](pack/CrashTeamRacingNativePack.cs) has drifted from [`include/crowd/crowd_effects.h`](include/crowd/crowd_effects.h).
+See [docs/CROWD_CONTROL.md](docs/CROWD_CONTROL.md) if you're adding or changing an effect.
+
 First build compiles SDL3 from source. This is cached as a static library in the selected build directory.
 
 Output:
@@ -84,6 +123,9 @@ Output:
 - MSVC: `build-msvc-x86/Release/ctr_native.exe`
 - MinGW: `build/ctr_native.exe`
 - Linux: `build/ctr_native`
+
+The Crowd Control integration builds in by default. If this isn't desired, add the flag `-DCTR_CROWD_CONTROL=OFF`.
+Note that Crowd Control code never affects the PSX-matching build path.
 
 ### Clean build
 
@@ -113,20 +155,20 @@ If you downloaded a release build, you only need two things for normal play:
 Example:
 
 ```
-CTR-Native/
+CTR-Crowd-Control/
   ctr_native.exe
   assets/
     ctr-u.bin
 ```
 
-Then run `ctr_native.exe`.
+Then run `ctr_native.exe` (add `--crowd-control` to enable the Crowd Control integration).
 
 The disc image must be the common single-track raw PSX BIN layout: MODE2/2352 sectors, with the data track starting at byte 0. A cooked 2048-byte `.iso` does not preserve the XA/STR sector data needed for audio and video playback.
 
 For development builds run from `build/`, put the same `assets/ctr-u.bin` next to the source tree:
 
 ```
-ctr-native/
+ctr-crowd-control/
   build/
     ctr_native.exe
   assets/
@@ -142,7 +184,7 @@ Extracted files are still supported for development, modding, and debugging. If 
 Extracted-asset override structure:
 
 ```
-CTR-Native/
+CTR-Crowd-Control/
   ctr_native.exe
   assets/
     BIGFILE.BIG
@@ -176,6 +218,8 @@ main.c (entrypoint)
   |
   +-- platform/native_* (platform shell, audio, input, memcard, CD, renderer, PSX facade glue)
   |
+  +-- crowd/ (Crowd Control transport, effect runtime, effect handlers)
+  |
   +-- game/game_unity.h
         |
         +-- game/ (all decompiled game source)
@@ -184,6 +228,7 @@ main.c (entrypoint)
 ```
 
 - `CTR_NATIVE` is defined for native host/platform-specific code
+- `CTR_CROWD_CONTROL` is defined when the Crowd Control integration is built in (default)
 - First-party native code targets portable C17 with compiler extensions disabled
 - The default build uses 32-bit mode while remaining PSX address-shaped data and host-pointer contracts are audited. GPU primitive links are bridged through 24-bit native tokens; see `docs/MEMORY_MODEL.md`.
 
@@ -194,7 +239,11 @@ main.c (entrypoint)
 
 ## Credits
 
-- [CTR-ModSDK](https://github.com/CTR-tools/CTR-ModSDK) — the decompilation project this is built on
+- [CTR-tools/ctr-native](https://github.com/CTR-tools/ctr-native) — the native port this fork adds Crowd Control support to
+- [CTR-ModSDK](https://github.com/CTR-tools/CTR-ModSDK) — the decompilation project `ctr-native` is built on
 - [PsyCross](https://github.com/OpenDriver2/PsyCross) — original PS1 compatibility code from which parts of CTR Native's owned platform layer and PsyQ facade headers are derived
 - [SDL3](https://github.com/libsdl-org/SDL) — cross-platform multimedia
+- [Crowd Control](https://crowdcontrol.live/) — the platform and SDK this integration targets
+- [CDRomatron/CrashTeamRacing-CrowdControl](https://github.com/CDRomatron/CrashTeamRacing-CrowdControl) — the original Crowd Control for CTR
+- [FRDS/CrashTeamRacing-CrowdControl](https://github.com/FRDS/CrashTeamRacing-CrowdControl) — a fork of the original Crowd Control for CTR
 - Crash Team Racing is a trademark of Sony Computer Entertainment / Naughty Dog

@@ -156,4 +156,11 @@ if(BUILD_TESTING)
             -s ${CMAKE_SOURCE_DIR}/tools/matching
             -p test_*.py
     )
+
+    if(CTR_CROWD_CONTROL)
+        add_test(
+            NAME ctr_crowd_control_pack_sync
+            COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/crowdcontrol/gen_pack.py --check
+        )
+    endif()
 endif()
