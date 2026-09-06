@@ -54,8 +54,7 @@ Requests that don't arrive at a valid time answer `Retry` (Crowd Control's stand
 
 - Operates on the player 0's own kart (`gGT->drivers[0]`).
 - "Add" sets the held-item slot, or answers `Retry` if an item is already there.
-- "Remove" clears the slot, or answers `Failure` if a *specific* remove doesn't match what's currently held.<br /> 
-  *May adjust this later to not allow specific remove redeems and just do a general remove redeem.*
+- "Remove" clears the slot, taking whatever is currently held, or answers `Failure` if nothing is held.
 - The 3x Bomb and 3x Missile variants aren't currently present. They can be added later if requested, but didn't feel really interesting to add.
 
 ### Cheats, `crowd/crowd_fx_cheats.c`

@@ -29,7 +29,7 @@ public class CrashTeamRacingNative : SimpleTCPPack<SimpleTCPServerConnector>
 
     public override EffectList Effects { get; } = new Effect[]
     {
-        // Race items: "Add" fails if a held item is already present; "Remove" fails if it doesn't match.
+        // Race items: "Add" fails if a held item is already present; "Remove" fails if nothing is held.
         new("Give Random Item", "item_add_random") { Category = "Give Item", Price = 10, Description = "Give the player a random held item. Fails if they're already holding one." },
         new("Give Turbo Boost", "item_add_boost") { Category = "Give Item", Price = 10, Description = "Give the player a Turbo Boost. Fails if they already have an item." },
         new("Give Bomb", "item_add_bomb") { Category = "Give Item", Price = 10, Description = "Give the player a Bowling Bomb. Fails if they already have an item." },
@@ -43,19 +43,7 @@ public class CrashTeamRacingNative : SimpleTCPPack<SimpleTCPServerConnector>
         new("Give Warp Orb", "item_add_warp") { Category = "Give Item", Price = 10, Description = "Give the player a Warp Orb. Fails if they already have an item." },
         new("Give Invisibility", "item_add_invisibility") { Category = "Give Item", Price = 10, Description = "Give the player an Invisibility item. Fails if they already have an item." },
         new("Give Super Engine", "item_add_super_turbo") { Category = "Give Item", Price = 10, Description = "Give the player a Super Engine. Fails if they already have an item." },
-        new("Remove Random Item", "item_remove_random") { Category = "Remove Item", Price = 10, Description = "Take away whatever item the player is currently holding." },
-        new("Remove Turbo Boost", "item_remove_boost") { Category = "Remove Item", Price = 10, Description = "Take away the player's Turbo Boost. Fails if that isn't what they're holding." },
-        new("Remove Bomb", "item_remove_bomb") { Category = "Remove Item", Price = 10, Description = "Take away the player's Bowling Bomb. Fails if that isn't what they're holding." },
-        new("Remove Missile", "item_remove_missile") { Category = "Remove Item", Price = 10, Description = "Take away the player's Tracking Missile. Fails if that isn't what they're holding." },
-        new("Remove TNT", "item_remove_tnt") { Category = "Remove Item", Price = 10, Description = "Take away the player's TNT crate. Fails if that isn't what they're holding." },
-        new("Remove Beaker", "item_remove_potion") { Category = "Remove Item", Price = 10, Description = "Take away the player's N. Brio Beaker (potion). Fails if that isn't what they're holding." },
-        new("Remove Spring", "item_remove_spring") { Category = "Remove Item", Price = 10, Description = "Take away the player's Spring. Fails if that isn't what they're holding." },
-        new("Remove Shield", "item_remove_shield") { Category = "Remove Item", Price = 10, Description = "Take away the player's Power Shield. Fails if that isn't what they're holding." },
-        new("Remove Mask", "item_remove_mask") { Category = "Remove Item", Price = 10, Description = "Take away the player's Aku Aku/Uka Uka Mask. Fails if that isn't what they're holding." },
-        new("Remove Clock", "item_remove_clock") { Category = "Remove Item", Price = 10, Description = "Take away the player's N. Tropy Clock. Fails if that isn't what they're holding." },
-        new("Remove Warp Orb", "item_remove_warp") { Category = "Remove Item", Price = 10, Description = "Take away the player's Warp Orb. Fails if that isn't what they're holding." },
-        new("Remove Invisibility", "item_remove_invisibility") { Category = "Remove Item", Price = 10, Description = "Take away the player's Invisibility item. Fails if that isn't what they're holding." },
-        new("Remove Super Engine", "item_remove_super_turbo") { Category = "Remove Item", Price = 10, Description = "Take away the player's Super Engine. Fails if that isn't what they're holding." },
+        new("Remove Item", "item_remove") { Category = "Remove Item", Price = 10, Description = "Take away whatever item the player is currently holding." },
 
         // Cheats
         new("Infinite Wumpa", "cheat_infinite_wumpa") { Category = "Cheats", Duration = 30, Price = 40, Description = "The player's Wumpa fruit is maxed out for 30 seconds." },

@@ -33,16 +33,11 @@ internal enum CrowdEffectStatus CrowdFxItems_Add(DriverHeldItem itemId)
 	return CROWD_STATUS_SUCCESS;
 }
 
-/* itemId == HELD_ITEM_NONE means "remove whatever is held". Otherwise refuses (Failure) when the held item does not match. */
-internal enum CrowdEffectStatus CrowdFxItems_Remove(DriverHeldItem itemId)
+internal enum CrowdEffectStatus CrowdFxItems_Remove(void)
 {
 	struct Driver *driver = sdata->gGT->drivers[0];
 
 	if (driver->heldItemID == HELD_ITEM_NONE)
-	{
-		return CROWD_STATUS_FAILURE;
-	}
-	if ((itemId != HELD_ITEM_NONE) && (driver->heldItemID != itemId))
 	{
 		return CROWD_STATUS_FAILURE;
 	}
@@ -65,20 +60,6 @@ internal enum CrowdEffectStatus CrowdFxItems_Remove(DriverHeldItem itemId)
 	}
 CROWD_ITEM_LIST(CROWD_ITEM_ADD_FN)
 #undef CROWD_ITEM_ADD_FN
-
-#define CROWD_ITEM_REMOVE_FN(name, itemId) \
-	enum CrowdEffectStatus Crowd_Fx_ItemRemove##name##_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request) \
-	{ \
-		(void)effect; \
-		(void)request; \
-		return CrowdFxItems_Remove(itemId); \
-	} \
-	void Crowd_Fx_ItemRemove##name##_Stop(struct CrowdActiveEffect *effect) \
-	{ \
-		(void)effect; \
-	}
-CROWD_ITEM_LIST(CROWD_ITEM_REMOVE_FN)
-#undef CROWD_ITEM_REMOVE_FN
 
 enum CrowdEffectStatus Crowd_Fx_ItemAddRandom_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
@@ -104,15 +85,15 @@ void Crowd_Fx_ItemAddRandom_Stop(struct CrowdActiveEffect *effect)
 	(void)effect;
 }
 
-enum CrowdEffectStatus Crowd_Fx_ItemRemoveRandom_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
+enum CrowdEffectStatus Crowd_Fx_ItemRemove_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
 	(void)effect;
 	(void)request;
 
-	return CrowdFxItems_Remove(HELD_ITEM_NONE);
+	return CrowdFxItems_Remove();
 }
 
-void Crowd_Fx_ItemRemoveRandom_Stop(struct CrowdActiveEffect *effect)
+void Crowd_Fx_ItemRemove_Stop(struct CrowdActiveEffect *effect)
 {
 	(void)effect;
 }
