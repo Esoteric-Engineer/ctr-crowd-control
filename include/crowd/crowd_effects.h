@@ -98,3 +98,8 @@ CROWD_EFFECT("adv_remove_gold_relic", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATE
 CROWD_EFFECT("adv_remove_platinum_relic", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_ADVENTURE, AdvRemovePlatinumRelic)
 CROWD_EFFECT("adv_remove_crystal", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_ADVENTURE, AdvRemoveCrystal)
 CROWD_EFFECT("adv_remove_key", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_ADVENTURE, AdvRemoveKey)
+
+/* Wumpa give/remove (instant). Goes through RB_Player_ModifyWumpa. See crowd/crowd_fx_wumpa.c. */
+CROWD_EFFECT("wumpa_give", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_WUMPA, WumpaGive)
+CROWD_EFFECT("wumpa_remove", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_WUMPA, WumpaRemove)
+CROWD_EFFECT("wumpa_remove_all", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_WUMPA, WumpaRemoveAll)

@@ -107,5 +107,10 @@ public class CrashTeamRacingNative : SimpleTCPPack<SimpleTCPServerConnector>
         new("Remove Random Platinum Relic", "adv_remove_platinum_relic") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Platinum relic. Requires an active Adventure mode race." },
         new("Remove Random Crystal", "adv_remove_crystal") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Purple CTR Token. Requires an active Adventure mode race." },
         new("Remove Random Key", "adv_remove_key") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Boss Key. Requires an active Adventure mode race." },
+
+        // Wumpa
+        new("Give Wumpa", "wumpa_give") { Category = "Wumpa", Price = 5, Description = "Give the player 1 Wumpa fruit. Can't exceed 10 total." },
+        new("Remove Wumpa", "wumpa_remove") { Category = "Wumpa", Price = 5, Description = "Take 1 Wumpa fruit from the player." },
+        new("Remove All Wumpa", "wumpa_remove_all") { Category = "Wumpa", Price = 10, Description = "Take all of the player's Wumpa fruit." },
     };
 }

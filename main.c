@@ -84,6 +84,7 @@
 #include "crowd/crowd_fx_bots.c"
 #include "crowd/crowd_fx_character.c"
 #include "crowd/crowd_fx_adventure.c"
+#include "crowd/crowd_fx_wumpa.c"
 #include "crowd/crowd.c"
 #endif
 

@@ -103,6 +103,10 @@ This could potentially be tackled with a little time, but the safer option for n
 - If not in Adventure mode, everything here answers `Retry`.
 - If supplies run out (everything in a category already unlocked, or none left to remove from the player), this answers `Retry`.
 
+### Wumpa, `crowd/crowd_fx_wumpa.c`
+
+- Wumpa removal must manually set `driver->numWumpas`. Using `RB_Player_ModifyWumpa` (retail method) results in an active mask item blocking Wumpa removal, so only adding Wumpa uses that.
+
 ## Current Limitations
 
 **Single-player only.** Every effect targets `gGT->drivers[0]` / player 0. There's no reason why this couldn't be expanded later if there's demand for it, just felt out of scope for the time being.
