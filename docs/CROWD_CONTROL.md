@@ -79,9 +79,9 @@ Masks/rewrites bits directly in player 0's gamepad buffer every frame the effect
 - Remaps how the track surface handles for the duration of the effect. Only one can run at a time.
 - Note that this also applies to AI/bot racers, since bots resolve terrain the same way.
 
-### Enemy racer speed, mutually exclusive, `crowd/crowd_fx_bots.c`
+### Enemy racer speed, `crowd/crowd_fx_bots.c`
 
-- The 100%-slowdown variant clamps bot progress to zero rather than reversing it.
+- Multiple redemptions stack additively. Floored at -100% to freeze bots rather than having them reverse.
 - This is technically based on nav-path progress, so bots running under `BOT_FLAG_FREE_PHYSICS` are unaffected.<br />
   *I haven't noticed this causing any weirdness in the game, but may need to adjust later if it does.*
 

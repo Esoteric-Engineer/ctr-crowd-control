@@ -4,50 +4,29 @@
 
 #include <common.h>
 
-/* Only one bot-speed effect can be active at a time. */
-enum CrowdBotSpeedMode
-{
-	CROWD_BOT_SPEED_MODE_NONE,
-	CROWD_BOT_SPEED_MODE_DOWN_50,
-	CROWD_BOT_SPEED_MODE_UP_50,
-	CROWD_BOT_SPEED_MODE_DOWN_100,
-	CROWD_BOT_SPEED_MODE_UP_100,
-};
-
-global_variable enum CrowdBotSpeedMode s_botSpeedMode = CROWD_BOT_SPEED_MODE_NONE;
-
-internal enum CrowdEffectStatus CrowdFxBots_Start(enum CrowdBotSpeedMode mode)
-{
-	if (s_botSpeedMode != CROWD_BOT_SPEED_MODE_NONE)
-	{
-		return CROWD_STATUS_RETRY;
-	}
-
-	s_botSpeedMode = mode;
-	return CROWD_STATUS_SUCCESS;
-}
-
-internal void CrowdFxBots_Stop(enum CrowdBotSpeedMode mode)
-{
-	if (s_botSpeedMode == mode)
-	{
-		s_botSpeedMode = CROWD_BOT_SPEED_MODE_NONE;
-	}
-}
+/* One counter per simultaneously active redemption of each effect. */
+global_variable s32 s_botSpeedDown50Count = 0;
+global_variable s32 s_botSpeedUp50Count = 0;
+global_variable s32 s_botSpeedDown100Count = 0;
+global_variable s32 s_botSpeedUp100Count = 0;
 
 enum CrowdEffectStatus Crowd_Fx_BotsSpeedDown50_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
 	(void)effect;
 	(void)request;
 
-	return CrowdFxBots_Start(CROWD_BOT_SPEED_MODE_DOWN_50);
+	s_botSpeedDown50Count++;
+	return CROWD_STATUS_SUCCESS;
 }
 
 void Crowd_Fx_BotsSpeedDown50_Stop(struct CrowdActiveEffect *effect)
 {
 	(void)effect;
 
-	CrowdFxBots_Stop(CROWD_BOT_SPEED_MODE_DOWN_50);
+	if (s_botSpeedDown50Count > 0)
+	{
+		s_botSpeedDown50Count--;
+	}
 }
 
 enum CrowdEffectStatus Crowd_Fx_BotsSpeedUp50_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
@@ -55,14 +34,18 @@ enum CrowdEffectStatus Crowd_Fx_BotsSpeedUp50_Start(struct CrowdActiveEffect *ef
 	(void)effect;
 	(void)request;
 
-	return CrowdFxBots_Start(CROWD_BOT_SPEED_MODE_UP_50);
+	s_botSpeedUp50Count++;
+	return CROWD_STATUS_SUCCESS;
 }
 
 void Crowd_Fx_BotsSpeedUp50_Stop(struct CrowdActiveEffect *effect)
 {
 	(void)effect;
 
-	CrowdFxBots_Stop(CROWD_BOT_SPEED_MODE_UP_50);
+	if (s_botSpeedUp50Count > 0)
+	{
+		s_botSpeedUp50Count--;
+	}
 }
 
 enum CrowdEffectStatus Crowd_Fx_BotsSpeedDown100_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
@@ -70,14 +53,18 @@ enum CrowdEffectStatus Crowd_Fx_BotsSpeedDown100_Start(struct CrowdActiveEffect 
 	(void)effect;
 	(void)request;
 
-	return CrowdFxBots_Start(CROWD_BOT_SPEED_MODE_DOWN_100);
+	s_botSpeedDown100Count++;
+	return CROWD_STATUS_SUCCESS;
 }
 
 void Crowd_Fx_BotsSpeedDown100_Stop(struct CrowdActiveEffect *effect)
 {
 	(void)effect;
 
-	CrowdFxBots_Stop(CROWD_BOT_SPEED_MODE_DOWN_100);
+	if (s_botSpeedDown100Count > 0)
+	{
+		s_botSpeedDown100Count--;
+	}
 }
 
 enum CrowdEffectStatus Crowd_Fx_BotsSpeedUp100_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
@@ -85,35 +72,29 @@ enum CrowdEffectStatus Crowd_Fx_BotsSpeedUp100_Start(struct CrowdActiveEffect *e
 	(void)effect;
 	(void)request;
 
-	return CrowdFxBots_Start(CROWD_BOT_SPEED_MODE_UP_100);
+	s_botSpeedUp100Count++;
+	return CROWD_STATUS_SUCCESS;
 }
 
 void Crowd_Fx_BotsSpeedUp100_Stop(struct CrowdActiveEffect *effect)
 {
 	(void)effect;
 
-	CrowdFxBots_Stop(CROWD_BOT_SPEED_MODE_UP_100);
+	if (s_botSpeedUp100Count > 0)
+	{
+		s_botSpeedUp100Count--;
+	}
 }
 
 /* -100% clamps to zero rather than reversing bot progress. */
 int CrowdFxBots_ScaleDelta(int delta)
 {
-	switch (s_botSpeedMode)
+	s32 percent = (s_botSpeedUp50Count * 50) + (s_botSpeedUp100Count * 100) - (s_botSpeedDown50Count * 50) - (s_botSpeedDown100Count * 100);
+
+	if (percent < -100)
 	{
-	case CROWD_BOT_SPEED_MODE_DOWN_50:
-		return delta / 2;
-
-	case CROWD_BOT_SPEED_MODE_UP_50:
-		return delta + (delta / 2);
-
-	case CROWD_BOT_SPEED_MODE_DOWN_100:
-		return 0;
-
-	case CROWD_BOT_SPEED_MODE_UP_100:
-		return delta * 2;
-
-	case CROWD_BOT_SPEED_MODE_NONE:
-	default:
-		return delta;
+		percent = -100;
 	}
+
+	return (delta * (100 + percent)) / 100;
 }
