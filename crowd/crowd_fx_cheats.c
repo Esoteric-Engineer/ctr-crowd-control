@@ -98,19 +98,28 @@ void Crowd_Fx_CheatInfiniteMasks_Stop(struct CrowdActiveEffect *effect)
 	CrowdFxCheats_HeldItemStop(CHEAT_MASK, HELD_ITEM_MASK);
 }
 
-enum CrowdEffectStatus Crowd_Fx_CheatInfiniteTurbo_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
+enum CrowdEffectStatus Crowd_Fx_CheatPermanentSuperEngine_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
 	(void)effect;
 	(void)request;
 
-	return CrowdFxCheats_HeldItemStart(CHEAT_TURBO, HELD_ITEM_TURBO);
+	struct GameTracker *gGT = sdata->gGT;
+	struct Driver *driver = gGT->drivers[0];
+
+	gGT->gameMode2 |= CHEAT_ENGINE;
+	if (driver->superEngineTimer == 0)
+	{
+		driver->superEngineTimer = 1; /* gets frozen by CHEAT_ENGINE */
+	}
+	return CROWD_STATUS_SUCCESS;
 }
 
-void Crowd_Fx_CheatInfiniteTurbo_Stop(struct CrowdActiveEffect *effect)
+void Crowd_Fx_CheatPermanentSuperEngine_Stop(struct CrowdActiveEffect *effect)
 {
 	(void)effect;
 
-	CrowdFxCheats_HeldItemStop(CHEAT_TURBO, HELD_ITEM_TURBO);
+	sdata->gGT->gameMode2 &= ~CHEAT_ENGINE;
+	/* Let superEngineTimer count down and expire normally. */
 }
 
 enum CrowdEffectStatus Crowd_Fx_CheatInfiniteBombs_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)

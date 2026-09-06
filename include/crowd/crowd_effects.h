@@ -36,7 +36,7 @@ CROWD_EFFECT("item_remove", CROWD_EFFECT_INSTANT, 0, CROWD_EFFECT_CATEGORY_ITEM,
 /* Cheat-flag timed effects (all 30s). See crowd/crowd_fx_cheats.c. */
 CROWD_EFFECT("cheat_infinite_wumpa", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatInfiniteWumpa)
 CROWD_EFFECT("cheat_infinite_masks", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatInfiniteMasks)
-CROWD_EFFECT("cheat_infinite_turbo", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatInfiniteTurbo)
+CROWD_EFFECT("cheat_permanent_super_engine", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatPermanentSuperEngine)
 CROWD_EFFECT("cheat_infinite_invisibility", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatInfiniteInvisibility)
 CROWD_EFFECT("cheat_infinite_bombs", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatInfiniteBombs)
 CROWD_EFFECT("cheat_icy_tracks", CROWD_EFFECT_TIMED, 30000, CROWD_EFFECT_CATEGORY_CHEAT, CheatIcyTracks)

@@ -48,7 +48,7 @@ public class CrashTeamRacingNative : SimpleTCPPack<SimpleTCPServerConnector>
         // Cheats
         new("Infinite Wumpa", "cheat_infinite_wumpa") { Category = "Cheats", Duration = 30, Price = 40, Description = "The player's Wumpa fruit is maxed out for 30 seconds." },
         new("Infinite Masks", "cheat_infinite_masks") { Category = "Cheats", Duration = 30, Price = 40, Description = "The player has infinite Aku Aku/Uka Uka masks for 30 seconds." },
-        new("Infinite Turbo", "cheat_infinite_turbo") { Category = "Cheats", Duration = 30, Price = 40, Description = "The player has infinite Turbo Boost items for 30 seconds." },
+        new("Super Engine Mode", "cheat_permanent_super_engine") { Category = "Cheats", Duration = 30, Price = 40, Description = "The player's engine is supercharged for 30 seconds." },
         new("Infinite Invisibility", "cheat_infinite_invisibility") { Category = "Cheats", Duration = 30, Price = 40, Description = "The player stays invisible for 30 seconds." },
         new("Infinite Bombs", "cheat_infinite_bombs") { Category = "Cheats", Duration = 30, Price = 40, Description = "The player has infinite Bowling Bombs for 30 seconds." },
         new("Icy Tracks", "cheat_icy_tracks") { Category = "Cheats", Duration = 30, Price = 40, Description = "Every terrain is ice for 30 seconds." },
