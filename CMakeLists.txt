@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(CTR-Native C)
 include(CheckCCompilerFlag)
 
-set(CTR_NATIVE_VERSION "0.1.0-beta.7.1")
+set(CTR_NATIVE_VERSION "0.1.0")
 
 option(CTR_CROWD_CONTROL "Build the Crowd Control integration" ON)
 

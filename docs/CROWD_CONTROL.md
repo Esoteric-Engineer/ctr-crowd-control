@@ -3,6 +3,8 @@
 This `ctr_native` fork can accept effect requests from the [Crowd Control](https://crowdcontrol.live/) desktop app, letting viewers spend coins on effects.<br />
 Effect feedback lives entirely in Crowd Control's own overlay to keep the in-game HUD free of clutter.
 
+The Crowd Control desktop app is currently Windows-only, and as such, the only official release of this CTR Crowd Control project are Windows-only.<br /> `ctr_native` still builds and runs on Linux, but to use Crowd Control with a Linux build, the desktop app would need to run somewhere else (Windows machine/VM/Wine).
+
 Table of Contents:
 - [Running](#running)
 - [Loading the Pack](#loading-the-pack)
@@ -13,6 +15,7 @@ Table of Contents:
   - [Naming](#naming)
   - [Connection Info](#connection-info)
   - [Testing the Pack](#testing-the-pack)
+  - [Releases](#releases)
 
 ## Running
 
@@ -172,3 +175,16 @@ If needed, the build can also exclude the Crowd Control integration:
 ```bash
 cmake --preset linux-gcc-i686-release -DCTR_CROWD_CONTROL=OFF
 ```
+
+### Releases
+
+Published GitHub Releases are Windows-only, since that's the only platform the Crowd Control desktop app runs on.<br />
+The `package-windows.ps1` builds a release folder containing `ctr_native.exe`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, and `pack/CrashTeamRacingNativePack.cs`, then zips it with a `.sha256` checksum. It defaults its version string to `CTR_NATIVE_VERSION` in `CMakeLists.txt`, so a release just needs a version bump there before packaging.
+
+```bash
+build-msvc.bat && package-windows.ps1
+```
+
+Because the pack file ships inside the release archive, "Loading the Pack" above works the same way for a downloaded release.
+ 
+Linux isn't officially supported (since the Crowd Control desktop app doesn't run on Linux anyway), but `package-linux.sh` still exists and works the same way (see "Building from source" in the README). While not officially supported, it can be paired with a networked/Wine-hosted Crowd Control instance as described above.

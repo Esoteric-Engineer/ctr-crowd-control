@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: build-msvc-x86
+          key: windows-msvc-x86-${{ hashFiles('externals/SDL/**', 'CMakeLists.txt', 'CMakePresets.json') }}
+
+      - name: Configure
+        run: cmake --preset windows-msvc-x86
+
+      - name: Build
+        run: cmake --build --preset windows-msvc-x86-release
+
+      - name: Test
+        run: ctest --preset windows-msvc-x86-release
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-multilib libx11-dev libxext-dev libgl1-mesa-dev libasound2-dev libudev-dev libdbus-1-dev
+
+      - uses: actions/cache@v4
+        with:
+          path: build-linux-gcc-i686-release
+          key: linux-gcc-i686-release-${{ hashFiles('externals/SDL/**', 'CMakeLists.txt', 'CMakePresets.json') }}
+
+      - name: Configure
+        run: cmake --preset linux-gcc-i686-release
+
+      - name: Build
+        run: cmake --build --preset linux-gcc-i686-release
+
+      - name: Test
+        run: ctest --preset linux-gcc-i686-release
