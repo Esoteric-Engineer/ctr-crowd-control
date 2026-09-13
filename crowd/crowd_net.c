@@ -113,7 +113,7 @@ internal s32 CrowdNetRing_Find(const struct CrowdNetRing *ring, u8 target)
 
 global_variable CrowdSocket s_sock = CROWD_INVALID_SOCKET;
 global_variable enum CrowdNetState s_state = CROWD_NET_DISCONNECTED;
-global_variable char s_host[CROWD_NET_HOST_MAX];
+global_variable char s_hostName[CROWD_NET_HOST_MAX];
 global_variable s32 s_port;
 global_variable u32 s_frameCounter;
 global_variable u32 s_reconnectAtFrame;
@@ -218,9 +218,9 @@ internal void CrowdNet_BeginConnect(void)
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons((u16)s_port);
 
-	if (inet_pton(AF_INET, s_host, &addr.sin_addr) != 1)
+	if (inet_pton(AF_INET, s_hostName, &addr.sin_addr) != 1)
 	{
-		Platform_LogWarn("[CTR Crowd] invalid --crowd-host address: %s\n", s_host);
+		Platform_LogWarn("[CTR Crowd] invalid --crowd-host address: %s\n", s_hostName);
 		CrowdNet_CloseSocket(s_sock);
 		s_sock = CROWD_INVALID_SOCKET;
 		s_reconnectAtFrame = s_frameCounter + CROWD_NET_RECONNECT_DELAY_FRAMES;
@@ -232,7 +232,7 @@ internal void CrowdNet_BeginConnect(void)
 	{
 		/* the handshake can complete synchronously for loopback */
 		s_state = CROWD_NET_CONNECTED;
-		Platform_Log("[CTR Crowd] connected to %s:%d\n", s_host, (int)s_port);
+		Platform_Log("[CTR Crowd] connected to %s:%d\n", s_hostName, (int)s_port);
 		return;
 	}
 
@@ -282,14 +282,14 @@ internal void CrowdNet_PumpConnecting(void)
 			}
 
 			s_state = CROWD_NET_CONNECTED;
-			Platform_Log("[CTR Crowd] connected to %s:%d\n", s_host, (int)s_port);
+			Platform_Log("[CTR Crowd] connected to %s:%d\n", s_hostName, (int)s_port);
 			return;
 		}
 	}
 
 	if ((s_frameCounter - s_connectStartFrame) >= CROWD_NET_CONNECT_TIMEOUT_FRAMES)
 	{
-		Platform_LogWarn("[CTR Crowd] connect to %s:%d timed out, retrying shortly\n", s_host, (int)s_port);
+		Platform_LogWarn("[CTR Crowd] connect to %s:%d timed out, retrying shortly\n", s_hostName, (int)s_port);
 		CrowdNet_HandleDisconnect();
 	}
 }
@@ -375,8 +375,8 @@ void CrowdNet_Init(const char *host, s32 port)
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
 #endif
 
-	strncpy(s_host, host, sizeof(s_host) - 1);
-	s_host[sizeof(s_host) - 1] = '\0';
+	strncpy(s_hostName, host, sizeof(s_hostName) - 1);
+	s_hostName[sizeof(s_hostName) - 1] = '\0';
 	s_port = port;
 
 	s_sock = CROWD_INVALID_SOCKET;
