@@ -34,7 +34,7 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install -y gcc-multilib libx11-dev:i386 libxext-dev:i386 libgl1-mesa-dev:i386 libasound2-dev:i386 libudev-dev:i386 libdbus-1-dev:i386
+          sudo apt-get install -y gcc-multilib libx11-dev:i386 libxext-dev:i386 libxcursor-dev:i386 libxfixes-dev:i386 libxi-dev:i386 libxrandr-dev:i386 libgl1-mesa-dev:i386 libasound2-dev:i386 libudev-dev:i386 libdbus-1-dev:i386
 
       - uses: actions/cache@v4
         with:
