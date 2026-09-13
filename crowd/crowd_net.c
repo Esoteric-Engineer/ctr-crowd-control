@@ -8,8 +8,19 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
 #endif
+/* native_win32.h undefines far/near earlier in this unity build so PS1 SDK/game
+identifiers named far/near aren't corrupted; the Windows SDK's own winsock headers
+still use FAR/far in their declarations, so put them back just for this include. */
+#ifndef far
+#define far
+#endif
+#ifndef near
+#define near
+#endif
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#undef far
+#undef near
 typedef SOCKET CrowdSocket;
 typedef int CrowdSockLen;
 #define CROWD_INVALID_SOCKET INVALID_SOCKET
