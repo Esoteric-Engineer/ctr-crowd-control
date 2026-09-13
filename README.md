@@ -95,9 +95,11 @@ That's it. SDL3 is compiled from vendored source -- no separate install needed.
 
 ### Linux (Debian/Ubuntu)
 
-```
+```bash
+sudo dpkg --add-architecture i386
+sudo apt update
 sudo apt install gcc-multilib
-sudo apt install libx11-dev libxext-dev libgl1-mesa-dev libasound2-dev libudev-dev libdbus-1-dev
+sudo apt install libx11-dev:i386 libxext-dev:i386 libgl1-mesa-dev:i386 libasound2-dev:i386 libudev-dev:i386 libdbus-1-dev:i386
 ```
 
 ### Build commands
