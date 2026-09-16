@@ -16,7 +16,7 @@ void CrowdProtocol_SendEffectStatus(const struct CrowdJsonSlice *idRaw, enum Cro
 	{
 		CrowdJsonWriter_RawField(&writer, "id", idRaw);
 	}
-	CrowdJsonWriter_IntField(&writer, "type", CROWD_RESPONSE_EFFECT_STATUS);
+	CrowdJsonWriter_IntField(&writer, "type", CROWD_RESPONSE_EFFECT_REQUEST);
 	CrowdJsonWriter_IntField(&writer, "status", (s32)status);
 	if (hasTimeRemaining)
 	{
