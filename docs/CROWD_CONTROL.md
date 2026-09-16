@@ -31,14 +31,14 @@ Flags:
 - `--crowd-control` enables the integration. 
 - `--crowd-host` and `--crowd-port` override the target and imply `--crowd-control`.
 
-The defaults are `127.0.0.1` and `58430`, matching `Host`/`Port` in [`pack/CrashTeamRacingNativePack.cs`](../pack/CrashTeamRacingNativePack.cs) (so if you change one, change the other). Without any of these flags, the integration won't do anything.
+The defaults are `127.0.0.1` and `58430`, matching `Host`/`Port` in [`pack/CrashTeamRacingNative.cs`](../pack/CrashTeamRacingNative.cs) (so if you change one, change the other). Without any of these flags, the integration won't do anything.
 
 To actually receive the effects in-game, you'll also need the Crowd Control desktop app running before you launch ctr_native (see below).
 
 ## Loading the Pack
 
 1. Install the [Crowd Control desktop app](https://crowdcontrol.live/) and the [Crowd Control SDK](https://github.com/WarpWorld/CrowdControl.SDK/releases) (to load local/unpublished packs).
-2. Using the SDK, load [`pack/CrashTeamRacingNativePack.cs`](../pack/CrashTeamRacingNativePack.cs) as a local pack.
+2. Using the SDK, load [`pack/CrashTeamRacingNative.cs`](../pack/CrashTeamRacingNative.cs) as a local pack.
 3. Launch `ctr_native --crowd-control` and start a race or adventure. The pack connects automatically once both sides are up.
 
 ## Redeemable Effects
@@ -179,7 +179,7 @@ cmake --preset linux-gcc-i686-release -DCTR_CROWD_CONTROL=OFF
 ### Releases
 
 Published GitHub Releases are Windows-only, since that's the only platform the Crowd Control desktop app runs on.<br />
-The `package-windows.ps1` builds a release folder containing `ctr_native.exe`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, and `pack/CrashTeamRacingNativePack.cs`, then zips it with a `.sha256` checksum. It defaults its version string to `CTR_NATIVE_VERSION` in `CMakeLists.txt`, so a release just needs a version bump there before packaging.
+The `package-windows.ps1` builds a release folder containing `ctr_native.exe`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, and `pack/CrashTeamRacingNative.cs`, then zips it with a `.sha256` checksum. It defaults its version string to `CTR_NATIVE_VERSION` in `CMakeLists.txt`, so a release just needs a version bump there before packaging.
 
 ```bash
 build-msvc.bat && package-windows.ps1

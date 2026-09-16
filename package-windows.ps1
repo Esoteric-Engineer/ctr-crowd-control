@@ -34,7 +34,7 @@ New-Item -ItemType Directory -Force -Path (Join-Path $packageDir "pack") | Out-N
 Copy-Item $binaryPath $packageDir
 Copy-Item "LICENSE" $packageDir
 Copy-Item "THIRD_PARTY_NOTICES.md" $packageDir
-Copy-Item "pack\CrashTeamRacingNativePack.cs" (Join-Path $packageDir "pack")
+Copy-Item "pack\CrashTeamRacingNative.cs" (Join-Path $packageDir "pack")
 
 $readmeText = @"
 CTR Native Windows x86 $Version build
@@ -54,7 +54,7 @@ ctr_native.exe
 Playing with Crowd Control:
 - Install the Crowd Control desktop app and the Crowd Control SDK
   (https://github.com/WarpWorld/CrowdControl.SDK/releases).
-- Point the SDK at pack\CrashTeamRacingNativePack.cs (included in this download) and load it as a local pack.
+- Point the SDK at pack\CrashTeamRacingNative.cs (included in this download) and load it as a local pack.
 - Run: ctr_native.exe --crowd-control
 
 The disc image must be the common single-track raw PSX BIN layout:

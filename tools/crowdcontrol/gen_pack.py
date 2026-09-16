@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Diffs pack/CrashTeamRacingNativePack.cs against include/crowd/crowd_effects.h and reports drift.
+"""Diffs pack/CrashTeamRacingNative.cs against include/crowd/crowd_effects.h and reports drift.
 
 Display names, categories, descriptions, and prices are pack-only and hand-authored. This script just checks effect codes and durations for validity.
 Does not write the .cs file.
@@ -19,7 +19,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 EFFECTS_HEADER = REPO_ROOT / "include" / "crowd" / "crowd_effects.h"
-PACK_FILE = REPO_ROOT / "pack" / "CrashTeamRacingNativePack.cs"
+PACK_FILE = REPO_ROOT / "pack" / "CrashTeamRacingNative.cs"
 
 HEADER_ENTRY_RE = re.compile(
     r'CROWD_EFFECT\(\s*"([^"]+)"\s*,\s*(CROWD_EFFECT_\w+)\s*,\s*(\d+)\s*,\s*(CROWD_EFFECT_CATEGORY_\w+)\s*,\s*(\w+)\s*\)'
@@ -145,7 +145,7 @@ def main() -> int:
         return 0
 
     if args.check:
-        print("FAILED: pack/CrashTeamRacingNativePack.cs has drifted from include/crowd/crowd_effects.h.", file=sys.stderr)
+        print("FAILED: pack/CrashTeamRacingNative.cs has drifted from include/crowd/crowd_effects.h.", file=sys.stderr)
         return 1
 
     print("(run with --check to make this a failing exit code, e.g. in CI)")

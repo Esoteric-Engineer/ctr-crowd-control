@@ -21,7 +21,7 @@ Read this if you've downloaded a release build and want to get up and running.
        ctr-u.bin
    ```
 
-2. **Load the pack:** Install the [Crowd Control desktop app](https://crowdcontrol.live/) and the [Crowd Control SDK](https://github.com/WarpWorld/CrowdControl.SDK/releases), then point the SDK at `pack/CrashTeamRacingNativePack.cs` (included in the release) and load it as a local pack.
+2. **Load the pack:** Install the [Crowd Control desktop app](https://crowdcontrol.live/) and the [Crowd Control SDK](https://github.com/WarpWorld/CrowdControl.SDK/releases), then point the SDK at `pack/CrashTeamRacingNative.cs` (included in the release) and load it as a local pack.
 
 3. **Launch:** With the desktop app running and the pack loaded, run:
    ```
@@ -119,7 +119,7 @@ cmake --build --preset windows-msvc-x86-debug
 ctest --preset windows-msvc-x86-debug
 ```
 
-`ctest` runs `tools/crowdcontrol/gen_pack.py --check`, which fails the build if [`pack/CrashTeamRacingNativePack.cs`](pack/CrashTeamRacingNativePack.cs) has drifted from [`include/crowd/crowd_effects.h`](include/crowd/crowd_effects.h).
+`ctest` runs `tools/crowdcontrol/gen_pack.py --check`, which fails the build if [`pack/CrashTeamRacingNative.cs`](pack/CrashTeamRacingNative.cs) has drifted from [`include/crowd/crowd_effects.h`](include/crowd/crowd_effects.h).
 See [docs/CROWD_CONTROL.md](docs/CROWD_CONTROL.md) if you're adding or changing an effect.
 
 First build compiles SDL3 from source. This is cached as a static library in the selected build directory.
