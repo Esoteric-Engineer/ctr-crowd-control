@@ -31,8 +31,10 @@ enum CrowdEffectStatus
 	CROWD_STATUS_FAILURE = 0x01,
 	CROWD_STATUS_UNAVAILABLE = 0x02,
 	CROWD_STATUS_RETRY = 0x03,
+	/* Internal Statuses - Start - https://developer.crowdcontrol.live/sdk/classes/ConnectorLib/JSON/EffectStatus */
 	CROWD_STATUS_QUEUE = 0x04,
 	CROWD_STATUS_RUNNING = 0x05,
+	/* Internal Statuses - End */
 	CROWD_STATUS_PAUSED = 0x06,
 	CROWD_STATUS_RESUMED = 0x07,
 	CROWD_STATUS_FINISHED = 0x08,

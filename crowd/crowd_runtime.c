@@ -209,7 +209,7 @@ internal void CrowdRuntime_HandleStart(const struct CrowdJsonSlice *idRaw, const
 
 	slot->remainingMs = slot->totalMs;
 	slot->paused = s_wasPaused;
-	CrowdRuntime_SendActiveEffectStatus(slot, CROWD_STATUS_RUNNING);
+	CrowdRuntime_SendActiveEffectStatus(slot, CROWD_STATUS_SUCCESS);
 }
 
 internal void CrowdRuntime_HandleStop(const struct CrowdJsonSlice *idRaw, const struct CrowdEffectDef *def)
