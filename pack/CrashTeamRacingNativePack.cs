@@ -93,19 +93,19 @@ public class CrashTeamRacingNative : SimpleTCPPack<SimpleTCPServerConnector>
         new("Become Fake Crash", "character_swap_fake_crash") { Category = "Character Swap", Price = 15, Description = "Swap the player to Fake Crash." },
 
         // Adventure progress
-        new("Give Random Adventure Item", "adv_add_random") { Category = "Add Adventure Progress", Price = 20, Description = "Unlock a random Trophy, Relic, Crystal, or Boss Key. Requires an active Adventure mode race." },
+        new("Give Random Adventure Item", "adv_add_random") { Category = "Add Adventure Progress", Price = 20, Description = "Unlock a random Trophy, Relic, CTR Token, or Boss Key. Requires an active Adventure mode race." },
         new("Give Random Trophy", "adv_add_trophy") { Category = "Add Adventure Progress", Price = 30, Description = "Unlock a random track's Trophy. Requires an active Adventure mode race." },
         new("Give Random Sapphire Relic", "adv_add_sapphire_relic") { Category = "Add Adventure Progress", Price = 30, Description = "Unlock a random track's Sapphire relic. Requires an active Adventure mode race." },
         new("Give Random Gold Relic", "adv_add_gold_relic") { Category = "Add Adventure Progress", Price = 30, Description = "Unlock a random track's Gold relic. Requires an active Adventure mode race." },
         new("Give Random Platinum Relic", "adv_add_platinum_relic") { Category = "Add Adventure Progress", Price = 30, Description = "Unlock a random track's Platinum relic. Requires an active Adventure mode race." },
-        new("Give Random Crystal", "adv_add_crystal") { Category = "Add Adventure Progress", Price = 30, Description = "Unlock a random hub's Purple CTR Token. Requires an active Adventure mode race." },
+        new("Give Random CTR Token", "adv_add_token") { Category = "Add Adventure Progress", Price = 30, Description = "Unlock a random CTR Token. Requires an active Adventure mode race." },
         new("Give Random Key", "adv_add_key") { Category = "Add Adventure Progress", Price = 30, Description = "Unlock a random hub's Boss Key. Requires an active Adventure mode race." },
-        new("Remove Random Adventure Item", "adv_remove_random") { Category = "Remove Adventure Progress", Price = 15, Description = "Revoke a random already-unlocked Trophy, Relic, or Crystal (never a Key). Requires an active Adventure mode race." },
+        new("Remove Random Adventure Item", "adv_remove_random") { Category = "Remove Adventure Progress", Price = 15, Description = "Revoke a random already-unlocked Trophy, Relic, or CTR Token (never a Key). Requires an active Adventure mode race." },
         new("Remove Random Trophy", "adv_remove_trophy") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Trophy. Requires an active Adventure mode race." },
         new("Remove Random Sapphire Relic", "adv_remove_sapphire_relic") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Sapphire relic. Requires an active Adventure mode race." },
         new("Remove Random Gold Relic", "adv_remove_gold_relic") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Gold relic. Requires an active Adventure mode race." },
         new("Remove Random Platinum Relic", "adv_remove_platinum_relic") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Platinum relic. Requires an active Adventure mode race." },
-        new("Remove Random Crystal", "adv_remove_crystal") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Purple CTR Token. Requires an active Adventure mode race." },
+        new("Remove Random CTR Token", "adv_remove_token") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked CTR Token. Requires an active Adventure mode race." },
         new("Remove Random Key", "adv_remove_key") { Category = "Remove Adventure Progress", Price = 25, Description = "Revoke a random already-unlocked Boss Key. Requires an active Adventure mode race." },
 
         // Wumpa

@@ -13,7 +13,11 @@ struct CrowdAdvRange
 enum
 {
 	CROWD_ADV_MAX_ELIGIBLE_BITS =
-	    ADV_REWARD_TROPHY_TRACK_COUNT + (ADV_REWARD_RELIC_TRACK_COUNT * 3) + ADV_REWARD_PURPLE_TOKEN_COUNT + ADV_REWARD_BOSS_KEY_COUNT,
+		ADV_REWARD_TROPHY_TRACK_COUNT +
+		(ADV_REWARD_RELIC_TRACK_COUNT * 3) +
+		ADV_REWARD_PURPLE_TOKEN_COUNT +
+	  ADV_REWARD_CTR_TOKEN_TRACK_COUNT + 
+		ADV_REWARD_BOSS_KEY_COUNT,
 };
 
 #define CROWD_ADV_CATEGORY_LIST(X)                                                  \
@@ -21,7 +25,6 @@ enum
 	X(SapphireRelic, ADV_REWARD_FIRST_SAPPHIRE_RELIC, ADV_REWARD_RELIC_TRACK_COUNT) \
 	X(GoldRelic, ADV_REWARD_FIRST_GOLD_RELIC, ADV_REWARD_RELIC_TRACK_COUNT)         \
 	X(PlatinumRelic, ADV_REWARD_FIRST_PLATINUM_RELIC, ADV_REWARD_RELIC_TRACK_COUNT) \
-	X(Crystal, ADV_REWARD_FIRST_PURPLE_TOKEN, ADV_REWARD_PURPLE_TOKEN_COUNT)        \
 	X(Key, ADV_REWARD_FIRST_BOSS_KEY, ADV_REWARD_BOSS_KEY_COUNT)
 
 /* Arcade/Time Trial/Battle never read sdata->advProgress, so gate on the same ADVENTURE_MODE bit checked right before touching these reward bits (game/222.c:136, game/MAIN/MainGameEnd.c:169). */
@@ -135,6 +138,52 @@ CROWD_ADV_CATEGORY_LIST(CROWD_ADV_REMOVE_FN)
 
 #undef CROWD_ADV_CATEGORY_LIST
 
+/* CTR Token covers both the Purple Tokens and the 16 per-track colored tokens, so it needs two ranges. */
+static const struct CrowdAdvRange s_ctrTokenRanges[] = {
+    {ADV_REWARD_FIRST_PURPLE_TOKEN, ADV_REWARD_PURPLE_TOKEN_COUNT},
+    {ADV_REWARD_FIRST_CTR_TOKEN, ADV_REWARD_CTR_TOKEN_TRACK_COUNT},
+};
+enum
+{
+	CROWD_ADV_CTR_TOKEN_RANGE_COUNT = (s32)(sizeof(s_ctrTokenRanges) / sizeof(s_ctrTokenRanges[0])),
+};
+
+enum CrowdEffectStatus Crowd_Fx_AdvAddToken_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
+{
+	(void)effect;
+	(void)request;
+
+	if (!CrowdFxAdventure_IsReady())
+	{
+		return CROWD_STATUS_RETRY;
+	}
+
+	return CrowdFxAdventure_ApplyBit(CrowdFxAdventure_PickBit(s_ctrTokenRanges, CROWD_ADV_CTR_TOKEN_RANGE_COUNT, 0), 1);
+}
+
+void Crowd_Fx_AdvAddToken_Stop(struct CrowdActiveEffect *effect)
+{
+	(void)effect;
+}
+
+enum CrowdEffectStatus Crowd_Fx_AdvRemoveToken_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
+{
+	(void)effect;
+	(void)request;
+
+	if (!CrowdFxAdventure_IsReady())
+	{
+		return CROWD_STATUS_RETRY;
+	}
+
+	return CrowdFxAdventure_ApplyBit(CrowdFxAdventure_PickBit(s_ctrTokenRanges, CROWD_ADV_CTR_TOKEN_RANGE_COUNT, 1), 0);
+}
+
+void Crowd_Fx_AdvRemoveToken_Stop(struct CrowdActiveEffect *effect)
+{
+	(void)effect;
+}
+
 enum CrowdEffectStatus Crowd_Fx_AdvAddRandom_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
 	(void)effect;
@@ -146,9 +195,13 @@ enum CrowdEffectStatus Crowd_Fx_AdvAddRandom_Start(struct CrowdActiveEffect *eff
 	}
 
 	static const struct CrowdAdvRange s_addRanges[] = {
-	    {ADV_REWARD_FIRST_TROPHY, ADV_REWARD_TROPHY_TRACK_COUNT},       {ADV_REWARD_FIRST_SAPPHIRE_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
-	    {ADV_REWARD_FIRST_GOLD_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},    {ADV_REWARD_FIRST_PLATINUM_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
-	    {ADV_REWARD_FIRST_PURPLE_TOKEN, ADV_REWARD_PURPLE_TOKEN_COUNT}, {ADV_REWARD_FIRST_BOSS_KEY, ADV_REWARD_BOSS_KEY_COUNT},
+	  {ADV_REWARD_FIRST_TROPHY, ADV_REWARD_TROPHY_TRACK_COUNT},
+	  {ADV_REWARD_FIRST_SAPPHIRE_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
+    {ADV_REWARD_FIRST_GOLD_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
+		{ADV_REWARD_FIRST_PLATINUM_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
+		{ADV_REWARD_FIRST_PURPLE_TOKEN, ADV_REWARD_PURPLE_TOKEN_COUNT},
+		{ADV_REWARD_FIRST_CTR_TOKEN, ADV_REWARD_CTR_TOKEN_TRACK_COUNT},
+		{ADV_REWARD_FIRST_BOSS_KEY, ADV_REWARD_BOSS_KEY_COUNT},
 	};
 	enum
 	{
@@ -175,9 +228,12 @@ enum CrowdEffectStatus Crowd_Fx_AdvRemoveRandom_Start(struct CrowdActiveEffect *
 	}
 
 	static const struct CrowdAdvRange s_removeRanges[] = {
-	    {ADV_REWARD_FIRST_TROPHY, ADV_REWARD_TROPHY_TRACK_COUNT},       {ADV_REWARD_FIRST_SAPPHIRE_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
-	    {ADV_REWARD_FIRST_GOLD_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},    {ADV_REWARD_FIRST_PLATINUM_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
-	    {ADV_REWARD_FIRST_PURPLE_TOKEN, ADV_REWARD_PURPLE_TOKEN_COUNT},
+		{ADV_REWARD_FIRST_TROPHY, ADV_REWARD_TROPHY_TRACK_COUNT},
+		{ADV_REWARD_FIRST_SAPPHIRE_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
+		{ADV_REWARD_FIRST_GOLD_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
+		{ADV_REWARD_FIRST_PLATINUM_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
+		{ADV_REWARD_FIRST_PURPLE_TOKEN, ADV_REWARD_PURPLE_TOKEN_COUNT},
+		{ADV_REWARD_FIRST_CTR_TOKEN, ADV_REWARD_CTR_TOKEN_TRACK_COUNT},
 	};
 	enum
 	{
