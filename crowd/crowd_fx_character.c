@@ -1,10 +1,6 @@
-#include <crowd/crowd_fx_character.h>
-
 #include <crowd/crowd_runtime.h>
 
 #include <common.h>
-
-#include <string.h>
 
 /* Oxide is excluded due to VehBirth_TireSprites setting Oxide to wheelSize=0. This handler doesn't currently replicate that path. */
 #define CROWD_CHARACTER_LIST(X) \
@@ -27,18 +23,13 @@
 enum
 {
 	CROWD_CHARACTER_WHEEL_SIZE = 0xccc, /* VEH_BIRTH_WHEEL_SIZE, game/Vehicle/VehBirth.c:20 */
+
+	/* Sized for the largest hi-LOD racer (Dingo, 24494 bytes, sector-rounded to 0x6000, plus some headroom). */
+	CROWD_CHARACTER_MODEL_BUFFER_BYTES = 0x8000,
 };
 
-/* Characters not currently on the track wouldn't be cached for swapping, so they need to be cached here at HI LOD quality.  */
-global_variable struct Model *s_crowdCharacterModelCache[NITROS_OXIDE + 1];
-
-void CrowdFxCharacter_Tick(void)
-{
-	if (sdata->Loading.stage != LOAD_IDLE)
-	{
-		memset(s_crowdCharacterModelCache, 0, sizeof(s_crowdCharacterModelCache));
-	}
-}
+/* Backs the single HI-LOD model driver 0 can be swapped to at a time. */
+global_variable u32 s_crowdCharacterModelBuffer[CROWD_CHARACTER_MODEL_BUFFER_BYTES / sizeof(u32)];
 
 internal struct Model *CrowdFxCharacter_GetModel(enum Characters characterID)
 {
@@ -48,21 +39,23 @@ internal struct Model *CrowdFxCharacter_GetModel(enum Characters characterID)
 		return model;
 	}
 
-	if (s_crowdCharacterModelCache[characterID] != NULL)
+	const int subfileIndex = BI_RACERMODELHI + characterID;
+	struct BigEntry *entry = BIG_GETENTRY(sdata->ptrBigfile1);
+	int roundedSize = (entry[subfileIndex].size + LOAD_CD_DATA_SECTOR_ROUND_MASK) & LOAD_CD_DATA_SECTOR_ALIGN_MASK;
+
+	if ((roundedSize <= 0) || (roundedSize > (int)sizeof(s_crowdCharacterModelBuffer)))
 	{
-		return s_crowdCharacterModelCache[characterID];
+		return NULL;
 	}
 
 	u32 size = 0;
-	void *fileBase = LOAD_DramFile(NULL, BI_RACERMODELHI + characterID, NULL, &size, -1);
+	void *fileBase = LOAD_DramFile(NULL, subfileIndex, s_crowdCharacterModelBuffer, &size, -1);
 	if (fileBase == NULL)
 	{
 		return NULL;
 	}
 
-	model = (struct Model *)((u8 *)fileBase + LOAD_MODEL_FILE_HEADER_BYTES);
-	s_crowdCharacterModelCache[characterID] = model;
-	return model;
+	return (struct Model *)((u8 *)fileBase + LOAD_MODEL_FILE_HEADER_BYTES);
 }
 
 /* Mutates instSelf->model in place instead of re-birthing the Instance/Thread, so flags and untouched Driver fields survive the swap. */
