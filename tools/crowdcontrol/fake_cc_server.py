@@ -7,7 +7,7 @@ Usage:
 
 Commands:
     test <code>                     EffectTest
-    start <code> [duration] [qty]   EffectStart
+    start <code> [seconds] [qty]    EffectStart (seconds is converted to milliseconds below)
     stop <code>                     EffectStop
     data                            DataRequest
     gameupdate                      GameUpdate
@@ -79,7 +79,7 @@ def build_request(ids: "count[int]", command: str, args: list[str]) -> Optional[
 
     if command == "start":
         if len(args) > 1:
-            request["duration"] = float(args[1])
+            request["duration"] = int(float(args[1]) * 1000)
         if len(args) > 2:
             request["quantity"] = int(args[2])
 

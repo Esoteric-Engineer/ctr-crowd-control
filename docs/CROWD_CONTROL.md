@@ -149,7 +149,7 @@ Messages are NUL-terminated (`0x00`) UTF-8 JSON in both directions:
 
 The `RequestType`, `ResponseType`, and `EffectStatus` enum values are defined in [`include/crowd/crowd_protocol.h`](../include/crowd/crowd_protocol.h).
 
-Every request needs a response within 5 seconds. Note that `duration` is in **seconds**, and `crowd_runtime.c` converts it to milliseconds to match the millisecond durations in `include/crowd/crowd_effects.h`.
+Every request needs a response within 5 seconds. Note that `duration` is in milliseconds (see `EffectRequest.duration` in [ConnectorLib.JSON](https://github.com/WarpWorld/ConnectorLib.JSON)), matching the millisecond durations in `include/crowd/crowd_effects.h`.
 
 ### Testing the Pack
 For development, it's usually faster to use [`tools/crowdcontrol/fake_cc_server.py`](../tools/crowdcontrol/fake_cc_server.py) instead of the SDK. It allows you to see the JSON data being sent/received, which can be helpful for troubleshooting.
@@ -162,12 +162,12 @@ ctr_native --crowd-control
 ```
 > start item_add_boost
 >> {"id": "1", "type": 1, "code": "item_add_boost"}
-<< {"id": "1", "type": 1, "status": 0}
+<< {"id": "1", "type": 0, "status": 0}
 > start cheat_icy_tracks 10
->> {"id": "2", "type": 1, "code": "cheat_icy_tracks", "duration": 10.0}
-<< {"id": "2", "type": 1, "status": 5, "timeRemaining": 10000}
+>> {"id": "2", "type": 1, "code": "cheat_icy_tracks", "duration": 10000}
+<< {"id": "2", "type": 0, "status": 0, "timeRemaining": 10000}
 ...
-<< {"id": "2", "type": 1, "status": 8}
+<< {"id": "2", "type": 0, "status": 8}
 ```
 
 If needed, the build can also exclude the Crowd Control integration:

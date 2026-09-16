@@ -139,12 +139,11 @@ internal void CrowdRuntime_FillFromRequest(struct CrowdActiveEffect *effect, con
 		effect->quantity = (s32)quantityValue->number;
 	}
 
-	/* SimpleTCP sends "duration" in seconds, which must then be converted to milliseconds for tables and timers. */
 	effect->totalMs = def->defaultDurationMs;
 	const struct CrowdJsonValue *durationValue = CrowdJson_Get(request, "duration");
 	if ((durationValue != NULL) && (durationValue->type == CROWD_JSON_NUMBER) && (durationValue->number > 0.0))
 	{
-		effect->totalMs = (s32)(durationValue->number * 1000.0);
+		effect->totalMs = (s32)durationValue->number;
 	}
 
 	effect->remainingMs = 0;
