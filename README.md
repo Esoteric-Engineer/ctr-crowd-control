@@ -13,21 +13,24 @@ A huge thanks to [CDRomatron](https://github.com/CDRomatron) (the original creat
 
 Read this if you've downloaded a release build and want to get up and running.
 
-1. **Set up the game:** Unzip the release. Create a folder named `assets` next to the executable, then in that folder, add your **NTSC-U** copy of Crash Team Racing named `ctr-u.bin`:
+1. **Set up the game:** Unzip the release. Create a folder named `assets` in the same folder as the executable, then in that folder, add your **NTSC-U** copy of Crash Team Racing named `ctr-u.bin`:
    ```
-   CTR-Crowd-Control/
+   ctr-crowd-control/
      ctr_native.exe
      assets/
        ctr-u.bin
    ```
 
-2. **Load the pack:** Install the [Crowd Control desktop app](https://crowdcontrol.live/) and the [Crowd Control SDK](https://github.com/WarpWorld/CrowdControl.SDK/releases), then point the SDK at `pack/CrashTeamRacingNative.cs` (included in the release) and load it as a local pack.
+2. **Set up Crowd Control:** 
+    - Install the [Crowd Control desktop app](https://crowdcontrol.live/) and sign into it.
+    - Find "Crash Team Racing" in the games list and click on it.
+    - Click on "Path Selected". Change this to the folder containing the `ctr_native.exe` executable and the assets folder.
 
-3. **Launch:** With the desktop app running and the pack loaded, run:
-   ```
-   ctr_native.exe --crowd-control
-   ```
-   The game connects to the app automatically. **That's it!**
+3. **Play:**
+    - Click on "Launch Game".
+    - Once the game is past the opening credits, click on "Start Session".
+
+    The game connects to the app automatically. **That's it!**
 
 *If running Crowd Control on a non-standard host or port, see [docs/CROWD_CONTROL.md](docs/CROWD_CONTROL.md) for notes on `--crowd-host` and `--crowd-port` flags.*
 
