@@ -93,6 +93,7 @@ Masks/rewrites bits directly in player 0's gamepad buffer every frame the effect
 - One `character_swap_<name>` variant per selectable character, plus a random option.
 - Swaps the model, stats, and audio on player 0's live kart in place.<br />
   *This appears to be the same technique used normally for character-select and ghost replay, which ends up preserving the position/speed, held item, etc.*
+- Works in boss races. In Adventure mode, the swap also updates the adventure profile's character, so it persists through saves and hub reloads.
 
 **Note on Oxide:**
 Oxide isn't currently available because the swap handler doesn't replicate his special-cased wheel size (see the Oxide branch of `VehBirth_TireSprites`).
