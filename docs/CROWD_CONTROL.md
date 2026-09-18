@@ -102,8 +102,6 @@ This could potentially be tackled with a little time, but the safer option for n
 ### Adventure progress, `crowd/crowd_fx_adventure.c`
 
 - A random add/remove pair, plus an add/remove pair per progress category.
-- It was a deliberate choice for now to not have key removal be part of the random remove option.<br />
-  *Will need to get feedback from CTR streamers to see if this should be adjusted.*
 - If not in Adventure mode, everything here answers `Retry`.
 - If supplies run out (everything in a category already unlocked, or none left to remove from the player), this answers `Retry`.
 

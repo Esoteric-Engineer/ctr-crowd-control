@@ -216,7 +216,6 @@ void Crowd_Fx_AdvAddRandom_Stop(struct CrowdActiveEffect *effect)
 	(void)effect;
 }
 
-/* Deliberately excludes Key (removing a key should be something done intentionally due to how much it can impact length of the game). */
 enum CrowdEffectStatus Crowd_Fx_AdvRemoveRandom_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
 	(void)effect;
@@ -234,6 +233,7 @@ enum CrowdEffectStatus Crowd_Fx_AdvRemoveRandom_Start(struct CrowdActiveEffect *
 		{ADV_REWARD_FIRST_PLATINUM_RELIC, ADV_REWARD_RELIC_TRACK_COUNT},
 		{ADV_REWARD_FIRST_PURPLE_TOKEN, ADV_REWARD_PURPLE_TOKEN_COUNT},
 		{ADV_REWARD_FIRST_CTR_TOKEN, ADV_REWARD_CTR_TOKEN_TRACK_COUNT},
+		{ADV_REWARD_FIRST_BOSS_KEY, ADV_REWARD_BOSS_KEY_COUNT},
 	};
 	enum
 	{
