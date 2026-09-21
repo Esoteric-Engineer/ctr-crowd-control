@@ -37,6 +37,9 @@ Read this if you've downloaded a release build and want to get up and running.
 **A note for Linux players:** The Crowd Control desktop app is currently (unfortunately) Windows-only, so releases of this project are Windows-only to match. Linux won't be officially supported here unless Crowd Control adds Linux support to their desktop app.<br />
 That being said, you can still build and play CTR on Linux from source (see "Building from source" below), but to use Crowd Control with it you'll need the desktop app running somewhere else (separate Windows machine, VM, or Wine), then point the native binary at that machine using the `--crowd-host` flag. 
 
+## Save States
+
+Press **F5** to save a quick state and **F8** to load it. The state is stored in `debug/states/quick.ctrstates`.
 
 Majority of the README below this point is the original `ctr-native` README with a few notes added about CrowdControl structure, and updated Credits.
 

@@ -24,8 +24,18 @@
 
 global_variable s32 s_quickSaveRequested;
 global_variable s32 s_quickLoadRequested;
+#define NATIVE_SAVESTATE_MESSAGE_FRAMES 120
+
+global_variable const char *s_messageText;
+global_variable s32 s_messageFramesLeft;
 global_variable u8 *s_quickPayload;
 global_variable int s_quickPayloadSize;
+
+internal void NativeSaveState_SetMessage(const char *text)
+{
+	s_messageText = text;
+	s_messageFramesLeft = NATIVE_SAVESTATE_MESSAGE_FRAMES;
+}
 
 internal s32 NativeSaveState_PathExists(const char *path)
 {
@@ -116,12 +126,20 @@ internal s32 NativeSaveState_SaveQuick(void)
 	}
 
 	Platform_Log("[CTR State] saved quick state: %s\n", NATIVE_SAVESTATE_QUICK_PATH);
+	NativeSaveState_SetMessage("Saved State");
 	return 1;
 }
 
 internal s32 NativeSaveState_LoadQuick(void)
 {
 	struct NativeCheckpointFileRecordInfo info;
+
+	if (!NativeSaveState_PathExists(NATIVE_SAVESTATE_QUICK_PATH))
+	{
+		Platform_Log("[CTR State] no quick state available: %s\n", NATIVE_SAVESTATE_QUICK_PATH);
+		NativeSaveState_SetMessage("No Save State Available");
+		return 0;
+	}
 
 	if (!NativeSaveState_PreparePayload())
 	{
@@ -141,6 +159,7 @@ internal s32 NativeSaveState_LoadQuick(void)
 	}
 
 	Platform_Log("[CTR State] loaded quick state checksum=0x%08x: %s\n", info.checksum, NATIVE_SAVESTATE_QUICK_PATH);
+	NativeSaveState_SetMessage("Loaded State");
 	return 1;
 }
 
@@ -175,5 +194,16 @@ void NativeSaveState_BeginFrame(void)
 		s_quickLoadRequested = 0;
 		NativeSaveState_LoadQuick();
 	}
+}
+
+void NativeSaveState_DrawMessage(void)
+{
+	if (s_messageFramesLeft <= 0)
+	{
+		return;
+	}
+
+	s_messageFramesLeft--;
+	DecalFont_DrawLine((char *)s_messageText, 8, 8, FONT_SMALL, WHITE);
 }
 #endif

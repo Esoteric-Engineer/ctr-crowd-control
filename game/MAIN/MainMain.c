@@ -430,6 +430,7 @@ u32 main(void)
 			Platform_BeginFrame();
 #endif
 #if defined(CTR_NATIVE) && defined(CTR_INTERNAL)
+			NativeSaveState_DrawMessage();
 			NativePerf_BeginScope(NATIVE_PERF_BUCKET_RENDER_FRAME);
 #endif
 			MainFrame_RenderFrame(gGT, gGS);
