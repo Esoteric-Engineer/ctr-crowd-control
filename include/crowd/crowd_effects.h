@@ -48,6 +48,7 @@ CROWD_EFFECT("input_disable_turn_left", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_
 CROWD_EFFECT("input_disable_turn_right", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputDisableTurnRight)
 CROWD_EFFECT("input_reverse_steering", CROWD_EFFECT_TIMED, 15000, CROWD_EFFECT_CATEGORY_INPUT, InputReverseSteering)
 CROWD_EFFECT("input_reverse_camera", CROWD_EFFECT_TIMED, 20000, CROWD_EFFECT_CATEGORY_INPUT, InputReverseCamera)
+CROWD_EFFECT("camera_demo", CROWD_EFFECT_TIMED, 20000, CROWD_EFFECT_CATEGORY_INPUT, CameraDemo)
 CROWD_EFFECT("input_constant_jump", CROWD_EFFECT_TIMED, 10000, CROWD_EFFECT_CATEGORY_INPUT, InputConstantJump)
 
 /* Player speed. See crowd/crowd_fx_player_speed.c. */

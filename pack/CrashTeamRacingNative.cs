@@ -60,6 +60,7 @@ public class CrashTeamRacingNative : SimpleTCPPack<SimpleTCPServerConnector>
         new("Disable Turning Right", "input_disable_turn_right") { Category = "Controller", Duration = 10, Price = 20, Description = "The player can't steer right for 10 seconds." },
         new("Reverse Steering", "input_reverse_steering") { Category = "Controller", Duration = 15, Price = 25, Description = "The player's left/right steering inputs are swapped for 15 seconds." },
         new("Reverse Camera", "input_reverse_camera") { Category = "Controller", Duration = 20, Price = 25, Description = "The player's camera stays reversed, as if holding the look-back button, for 20 seconds." },
+        new("Demo Camera", "camera_demo") { Category = "Controller", Duration = 20, Price = 25, Description = "The player's camera switches to the game's demo camera for 20 seconds." },
         new("Constant Jump", "input_constant_jump") { Category = "Controller", Duration = 10, Price = 20, Description = "The player jumps continuously for 10 seconds." },
         new("Cut the Engine", "player_speed_disable") { Category = "Player Speed", Duration = 10, Price = 25, Description = "The player's speed is immediately forced to zero for 10 seconds." },
         new("Cap Player Speed 50%", "player_speed_max_down_50") { Category = "Player Speed", Duration = 10, Price = 20, Description = "The player's top speed is capped at 50% for 10 seconds. They can still freely accelerate/brake up to that cap." },

@@ -18,6 +18,7 @@ global_variable b32 s_constantJumpActive = 0;
 global_variable b32 s_turnLeftDisabled = 0;
 global_variable b32 s_turnRightDisabled = 0;
 global_variable b32 s_reverseSteeringActive = 0;
+global_variable b32 s_demoCameraActive = 0;
 
 enum CrowdEffectStatus Crowd_Fx_InputReverseCamera_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
 {
@@ -33,6 +34,56 @@ void Crowd_Fx_InputReverseCamera_Stop(struct CrowdActiveEffect *effect)
 	(void)effect;
 
 	s_reverseCameraActive = 0;
+}
+
+enum CrowdEffectStatus Crowd_Fx_CameraDemo_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)
+{
+	struct GameTracker *gGT = sdata->gGT;
+	struct CameraDC *cDC = &gGT->cameraDC[0];
+	(void)effect;
+	(void)request;
+
+	/* Hubs, arenas and battle maps have no usable EOR camera data and crash in CAM_ThTick, so only allow in races. */
+	if ((gGT->gameMode1 & (ADVENTURE_ARENA | BATTLE_MODE | CRYSTAL_CHALLENGE)) ||
+		gGT->level1 == 0 || gGT->level1->ptrSpawnType1 == 0 || gGT->level1->ptrSpawnType1->count < 3 ||
+		gGT->drivers[0] == 0 ||
+		gGT->trafficLightsTimer > 0) /* Pre-race fly-in/countdown, same wait as game/BOTS.c:1024. Triggering during this freezes camera. */
+	{
+		return CROWD_STATUS_RETRY;
+	}
+
+	const int eorFlags = CAMERA_FLAG_ARCADE_END_OF_RACE_REQUESTED | CAMERA_FLAG_ARCADE_END_OF_RACE_ACTIVE | CAMERA_FLAG_BATTLE_END_OF_RACE;
+	if (s_demoCameraActive || (cDC->flags & eorFlags) || cDC->cameraMode != 0)
+	{
+		return CROWD_STATUS_RETRY;
+	}
+
+	CAM_EndOfRace(cDC, gGT->drivers[0]);
+	s_demoCameraActive = 1;
+	return CROWD_STATUS_SUCCESS;
+}
+
+void Crowd_Fx_CameraDemo_Stop(struct CrowdActiveEffect *effect)
+{
+	(void)effect;
+
+	if (!s_demoCameraActive)
+	{
+		return;
+	}
+	s_demoCameraActive = 0;
+
+	if (!CrowdRuntime_IsReady())
+	{
+		return;
+	}
+
+	struct CameraDC *cDC = &sdata->gGT->cameraDC[0];
+	/* Not CAM_StartOfRace, it would restart the fly-in. */
+	cDC->flags &= ~(CAMERA_FLAG_ARCADE_END_OF_RACE_REQUESTED | CAMERA_FLAG_ARCADE_END_OF_RACE_ACTIVE | CAMERA_FLAG_BATTLE_END_OF_RACE | CAMERA_FLAG_TRACK_PATH_FACE_DRIVER);
+	cDC->flags |= CAMERA_FLAG_DIRECTION_CHANGED | CAMERA_FLAG_RESET_RAIN_POS;
+	cDC->cameraMode = 0;
+	cDC->currEOR = 0;
 }
 
 enum CrowdEffectStatus Crowd_Fx_InputConstantJump_Start(struct CrowdActiveEffect *effect, const struct CrowdJsonObject *request)

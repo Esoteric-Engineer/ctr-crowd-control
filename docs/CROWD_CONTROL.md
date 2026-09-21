@@ -70,6 +70,7 @@ Requests that don't arrive at a valid time answer `Retry` (Crowd Control's stand
 
 Masks/rewrites bits directly in player 0's gamepad buffer every frame the effect is active, so there's nothing to clean up on expiration (or in case of a crash).
 
+- `camera_demo` is the exception to "nothing to clean up". It calls `CAM_EndOfRace` on player 0's camera and on expiration clears the end-of-race camera flags and resets `cameraMode`.
 - `input_reverse_steering` is applied after the disable-turn-left/right checks, so those always block the player's raw physical steering direction, not whichever direction currently steers left/right once reversed.
 
 ### Player speed, `crowd/crowd_fx_player_speed.c`
