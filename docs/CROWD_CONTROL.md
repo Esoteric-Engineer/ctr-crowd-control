@@ -104,6 +104,8 @@ This could potentially be tackled with a little time, but the safer option for n
 - A random add/remove pair, plus an add/remove pair per progress category.
 - If not in Adventure mode, everything here answers `Retry`.
 - If supplies run out (everything in a category already unlocked, or none left to remove from the player), this answers `Retry`.
+- Since keys can come and go at any time, winning the first key always respawns the player outside the boss garage, instead of outside the Gem Stone Valley door.
+- Once a hub door's key cutscene starts, it always finishes, even if a key is removed mid-cutscene.
 
 ### Wumpa, `crowd/crowd_fx_wumpa.c`
 
