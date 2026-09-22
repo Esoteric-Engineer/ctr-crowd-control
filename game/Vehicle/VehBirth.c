@@ -64,6 +64,19 @@ static struct InstDef *VehBirth_FindDoor5(struct Level *level)
 	return NULL;
 }
 
+static int VehBirth_ShouldSpawnAtFirstKeyDoor(struct GameTracker *gGT)
+{
+#if defined(CTR_CROWD_CONTROL)
+	// NOTE(crowd): Retail parks the player at door #5 with VEH_FREEZE_DOOR, which only a first-time Aku Aku hint clears.
+	// Crowd Control shenanigans can leave that door already open or the hint already seen, softlocking the player there (sorry, FuzionSynth).
+	// Always return to the boss garage instead. Driving up to the door plays the same key/door cutscene.
+	(void)gGT;
+	return 0;
+#else
+	return (gGT->podiumRewardID == STATIC_KEY) && (gGT->currAdvProfile.numKeys == 1);
+#endif
+}
+
 static int VehBirth_ShouldSpawnOutsideBoss(struct GameTracker *gGT)
 {
 	if (gGT->podiumRewardID != STATIC_TROPHY)
@@ -192,7 +205,7 @@ void VehBirth_TeleportSelf(struct Driver *d, u8 spawnFlag, int spawnPosY)
 	}
 	else
 	{
-		if ((gGT->podiumRewardID == STATIC_KEY) && (gGT->currAdvProfile.numKeys == 1))
+		if (VehBirth_ShouldSpawnAtFirstKeyDoor(gGT))
 		{
 			doorInst = VehBirth_FindDoor5(level1);
 		}

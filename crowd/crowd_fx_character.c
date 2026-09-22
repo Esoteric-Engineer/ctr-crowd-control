@@ -62,12 +62,6 @@ internal struct Model *CrowdFxCharacter_GetModel(enum Characters characterID)
 internal enum CrowdEffectStatus CrowdFxCharacter_Swap(enum Characters characterID)
 {
 	struct GameTracker *gGT = sdata->gGT;
-
-	if (gGT->gameMode1 & ADVENTURE_BOSS)
-	{
-		return CROWD_STATUS_RETRY;
-	}
-
 	struct Driver *driver = gGT->drivers[0];
 	struct Model *model = CrowdFxCharacter_GetModel(characterID);
 
@@ -83,6 +77,11 @@ internal enum CrowdEffectStatus CrowdFxCharacter_Swap(enum Characters characterI
 	inst->model = model;
 
 	data.characterIDs[driver->driverID] = (s16)characterID;
+	if (gGT->gameMode1 & ADVENTURE_MODE)
+	{
+		sdata->advProgress.characterID = (s16)characterID;
+	}
+
 	driver->wheelSize = CROWD_CHARACTER_WHEEL_SIZE;
 
 	VehBirth_SetConsts(driver);

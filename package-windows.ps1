@@ -25,6 +25,11 @@ if (-not (Test-Path $binaryPath)) {
     exit 1
 }
 
+python3 tools/crowdcontrol/check_icons.py --output (Join-Path $BuildDir "icons.zip")
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
 if (Test-Path $packageDir) {
     Remove-Item -Recurse -Force $packageDir
 }
@@ -32,6 +37,7 @@ New-Item -ItemType Directory -Force -Path $packageDir | Out-Null
 New-Item -ItemType Directory -Force -Path (Join-Path $packageDir "pack") | Out-Null
 
 Copy-Item $binaryPath $packageDir
+Copy-Item (Join-Path $BuildDir "icons.zip") $packageDir
 Copy-Item "LICENSE" $packageDir
 Copy-Item "THIRD_PARTY_NOTICES.md" $packageDir
 Copy-Item "pack\CrashTeamRacingNative.cs" (Join-Path $packageDir "pack")

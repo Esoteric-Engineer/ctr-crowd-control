@@ -15,6 +15,7 @@ Table of Contents:
   - [Naming](#naming)
   - [Connection Info](#connection-info)
   - [Testing the Pack](#testing-the-pack)
+  - [Icons](#icons)
   - [Releases](#releases)
 
 ## Running
@@ -70,6 +71,7 @@ Requests that don't arrive at a valid time answer `Retry` (Crowd Control's stand
 
 Masks/rewrites bits directly in player 0's gamepad buffer every frame the effect is active, so there's nothing to clean up on expiration (or in case of a crash).
 
+- `camera_demo` is the exception to "nothing to clean up". It calls `CAM_EndOfRace` on player 0's camera and on expiration clears the end-of-race camera flags and resets `cameraMode`.
 - `input_reverse_steering` is applied after the disable-turn-left/right checks, so those always block the player's raw physical steering direction, not whichever direction currently steers left/right once reversed.
 
 ### Player speed, `crowd/crowd_fx_player_speed.c`
@@ -93,6 +95,7 @@ Masks/rewrites bits directly in player 0's gamepad buffer every frame the effect
 - One `character_swap_<name>` variant per selectable character, plus a random option.
 - Swaps the model, stats, and audio on player 0's live kart in place.<br />
   *This appears to be the same technique used normally for character-select and ghost replay, which ends up preserving the position/speed, held item, etc.*
+- Works in boss races. In Adventure mode, the swap also updates the adventure profile's character, so it persists through saves and hub reloads.
 
 **Note on Oxide:**
 Oxide isn't currently available because the swap handler doesn't replicate his special-cased wheel size (see the Oxide branch of `VehBirth_TireSprites`).
@@ -101,10 +104,10 @@ This could potentially be tackled with a little time, but the safer option for n
 ### Adventure progress, `crowd/crowd_fx_adventure.c`
 
 - A random add/remove pair, plus an add/remove pair per progress category.
-- It was a deliberate choice for now to not have key removal be part of the random remove option.<br />
-  *Will need to get feedback from CTR streamers to see if this should be adjusted.*
 - If not in Adventure mode, everything here answers `Retry`.
 - If supplies run out (everything in a category already unlocked, or none left to remove from the player), this answers `Retry`.
+- Since keys can come and go at any time, winning the first key always respawns the player outside the boss garage, instead of outside the Gem Stone Valley door.
+- Once a hub door's key cutscene starts, it always finishes, even if a key is removed mid-cutscene.
 
 ### Wumpa, `crowd/crowd_fx_wumpa.c`
 
@@ -176,10 +179,19 @@ If needed, the build can also exclude the Crowd Control integration:
 cmake --preset linux-gcc-i686-release -DCTR_CROWD_CONTROL=OFF
 ```
 
+### Icons
+
+Every effect code in `crowd_effects.h` needs a matching `pack/icons/<code>.png`, exactly 128x128 (Crowd Control's icon requirement). `pack/icons/templates/` holds some templates used to make new icons.
+
+All three `package-*` scripts check that every header code has a correctly-sized icon via the [`tools/crowdcontrol/check_icons.py`](../tools/crowdcontrol/check_icons.py) script.
+
+> [!IMPORTANT]
+> PRs with AI-generated icons will ***not*** be accepted.<br />If you're making a meaningful contribution to the project but don't have the know-how to put an icon together, copy the blank `template.png` to create a new blank icon, then flag it in the PR. I'd rather create the icon myself for a new effect than use AI-generated images in the project.
+
 ### Releases
 
 Published GitHub Releases are Windows-only, since that's the only platform the Crowd Control desktop app runs on.<br />
-The `package-windows.ps1` builds a release folder containing `ctr_native.exe`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, and `pack/CrashTeamRacingNative.cs`, then zips it with a `.sha256` checksum. It defaults its version string to `CTR_NATIVE_VERSION` in `CMakeLists.txt`, so a release just needs a version bump there before packaging.
+The `package-windows.ps1` builds a release folder containing `ctr_native.exe`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, `icons.zip`, and `pack/CrashTeamRacingNative.cs`, then zips it with a `.sha256` checksum. It defaults its version string to `CTR_NATIVE_VERSION` in `CMakeLists.txt`, so a release just needs a version bump there before packaging.
 
 ```bash
 build-msvc.bat && package-windows.ps1

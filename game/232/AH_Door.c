@@ -224,7 +224,12 @@ void AH_Door_ThTick(struct Thread *t)
 	}
 
 	// if player has less than that amount
+#if defined(CTR_CROWD_CONTROL)
+	// NOTE(crowd): Crowd Control can revoke a key mid-cutscene, which would leave the player frozen here until a key is given back. Once the cutscene has started, let it finish.
+	if ((gGT->currAdvProfile.numKeys < numKeys) && ((door->camFlags & WdCam_CutscenePlaying) == 0))
+#else
 	if (gGT->currAdvProfile.numKeys < numKeys)
+#endif
 	{
 		// if one key is required
 		if (numKeys == 1)
