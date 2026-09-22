@@ -17,10 +17,13 @@ if [[ ! -x "${BINARY_PATH}" ]]; then
     exit 1
 fi
 
+python3 tools/crowdcontrol/check_icons.py --output "${BUILD_DIR}/icons.zip"
+
 rm -rf "${PACKAGE_DIR}"
 mkdir -p "${PACKAGE_DIR}"
 
 cp "${BINARY_PATH}" "${PACKAGE_DIR}/"
+cp "${BUILD_DIR}/icons.zip" "${PACKAGE_DIR}/"
 cp LICENSE "${PACKAGE_DIR}/"
 cp THIRD_PARTY_NOTICES.md "${PACKAGE_DIR}/"
 mkdir -p "${PACKAGE_DIR}/pack"

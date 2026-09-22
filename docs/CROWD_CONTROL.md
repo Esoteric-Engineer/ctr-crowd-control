@@ -15,6 +15,7 @@ Table of Contents:
   - [Naming](#naming)
   - [Connection Info](#connection-info)
   - [Testing the Pack](#testing-the-pack)
+  - [Icons](#icons)
   - [Releases](#releases)
 
 ## Running
@@ -178,10 +179,19 @@ If needed, the build can also exclude the Crowd Control integration:
 cmake --preset linux-gcc-i686-release -DCTR_CROWD_CONTROL=OFF
 ```
 
+### Icons
+
+Every effect code in `crowd_effects.h` needs a matching `pack/icons/<code>.png`, exactly 128x128 (Crowd Control's icon requirement). `pack/icons/templates/` holds some templates used to make new icons.
+
+All three `package-*` scripts check that every header code has a correctly-sized icon via the [`tools/crowdcontrol/check_icons.py`](../tools/crowdcontrol/check_icons.py) script.
+
+> [!IMPORTANT]
+> PRs with AI-generated icons will ***not*** be accepted.<br />If you're making a meaningful contribution to the project but don't have the know-how to put an icon together, copy the blank `template.png` to create a new blank icon, then flag it in the PR. I'd rather create the icon myself for a new effect than use AI-generated images in the project.
+
 ### Releases
 
 Published GitHub Releases are Windows-only, since that's the only platform the Crowd Control desktop app runs on.<br />
-The `package-windows.ps1` builds a release folder containing `ctr_native.exe`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, and `pack/CrashTeamRacingNative.cs`, then zips it with a `.sha256` checksum. It defaults its version string to `CTR_NATIVE_VERSION` in `CMakeLists.txt`, so a release just needs a version bump there before packaging.
+The `package-windows.ps1` builds a release folder containing `ctr_native.exe`, `LICENSE`, `THIRD_PARTY_NOTICES.md`, `icons.zip`, and `pack/CrashTeamRacingNative.cs`, then zips it with a `.sha256` checksum. It defaults its version string to `CTR_NATIVE_VERSION` in `CMakeLists.txt`, so a release just needs a version bump there before packaging.
 
 ```bash
 build-msvc.bat && package-windows.ps1
